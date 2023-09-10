@@ -12,6 +12,7 @@ class MainViewController: UIViewController, NoteDelegate {
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var addButton: UIButton!
+    var selectAllButton: UIBarButtonItem!
     
     var notes: [Note] = []
     var selectedNote: Note?
@@ -78,6 +79,9 @@ class MainViewController: UIViewController, NoteDelegate {
     
     func setupViews() {
         tableView.register(UINib(nibName: "MainTableViewCell", bundle: nil), forCellReuseIdentifier: "mainTableViewCell")
+        tableView.allowsMultipleSelectionDuringEditing = true
+        let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress))
+        tableView.addGestureRecognizer(longPressGesture)
         
         currentSortMethod = UserDefaults.standard.string(forKey: "currentSortMethod")
         
@@ -181,6 +185,78 @@ class MainViewController: UIViewController, NoteDelegate {
         self.tableView.reloadData()
     }
     
+    func updateSelectAllButton() {
+        if tableView.indexPathsForSelectedRows?.count == notes.count {
+            selectAllButton.title = "Deselect All"
+        } else {
+            selectAllButton.title = "Select All"
+        }
+    }
+    
+    @objc func activateMultiSelectMode() {
+        tableView.setEditing(true, animated: true)
+        
+        let deleteAllButton = UIBarButtonItem(image: UIImage(systemName: "trash.fill"), style: .plain, target: self, action: #selector(deleteSelectedRows))
+        deleteAllButton.tintColor = .systemRed
+        let cancelButton = UIBarButtonItem(image: UIImage(systemName: "trash.slash.fill"), style: .done, target: self, action: #selector(exitEditingMode))
+        selectAllButton = UIBarButtonItem(title: "Select All", style: .plain, target: self, action: #selector(selectOrDeselectAll))
+        self.navigationItem.leftBarButtonItems = [deleteAllButton, cancelButton]
+        self.navigationItem.rightBarButtonItem = selectAllButton
+    }
+    
+    @objc func exitEditingMode() {
+        tableView.setEditing(false, animated: true)
+        self.navigationItem.leftBarButtonItems = nil
+        let sortButton = UIBarButtonItem(image: UIImage(systemName: "list.bullet"), style: .plain, target: self, action: #selector(showDropDown))
+        self.navigationItem.rightBarButtonItem = sortButton
+        dropDown.anchorView = sortButton
+    }
+    
+    @objc func deleteSelectedRows() {
+        if let selectedRows = tableView.indexPathsForSelectedRows {
+            let sortedRows = selectedRows.sorted(by: { $0.row > $1.row })
+            
+            for indexPath in sortedRows {
+                let idToDelete = self.notes[indexPath.row].id
+                if self.viewModel.deleteNote(with: idToDelete) {
+                    self.notes.remove(at: indexPath.row)
+                } else {
+                    print("Error during deleting")
+                }
+            }
+            
+            tableView.beginUpdates()
+            tableView.deleteRows(at: sortedRows, with: .fade)
+            tableView.endUpdates()
+        }
+        
+        exitEditingMode()
+    }
+    
+    @objc func selectOrDeselectAll() {
+        if tableView.indexPathsForSelectedRows?.count == notes.count {
+            for indexPath in tableView.indexPathsForSelectedRows! {
+                tableView.deselectRow(at: indexPath, animated: true)
+            }
+            selectAllButton.title = "Select All"
+        } else {
+            for row in 0..<notes.count {
+                tableView.selectRow(at: IndexPath(row: row, section: 0), animated: true, scrollPosition: .none)
+            }
+            selectAllButton.title = "Deselect All"
+        }
+    }
+    
+    @objc func handleLongPress(_ gestureRecognizer: UILongPressGestureRecognizer) {
+        if gestureRecognizer.state == .began {
+            let touchPoint = gestureRecognizer.location(in: self.tableView)
+            if let indexPath = self.tableView.indexPathForRow(at: touchPoint) {
+                activateMultiSelectMode()
+                tableView.selectRow(at: indexPath, animated: false, scrollPosition: .none)
+            }
+        }
+    }
+    
     @objc func handleDarkModeChange() {
         let isDarkMode = UserDefaults.standard.bool(forKey: "isDarkMode")
         view.overrideUserInterfaceStyle = isDarkMode ? .dark : .light
@@ -221,8 +297,16 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        selectedNote = notes[indexPath.row]
-        performSegue(withIdentifier: "toDetailsVC", sender: nil)
+        if !tableView.isEditing {
+            selectedNote = notes[indexPath.row]
+            performSegue(withIdentifier: "toDetailsVC", sender: nil)
+        } else {
+            updateSelectAllButton()
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        updateSelectAllButton()
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
