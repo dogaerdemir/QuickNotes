@@ -21,14 +21,24 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        NotificationCenter.default.addObserver(self, selector: #selector(handleDarkModeChange), name: NSNotification.Name("darkModeChanged"), object: nil)
         setupViews()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationItem.title = "Settings"
+        
+        let isDarkMode = UserDefaults.standard.bool(forKey: "isDarkMode")
+        self.view.overrideUserInterfaceStyle = isDarkMode ? .dark : .light
+        self.tabBarController?.overrideUserInterfaceStyle = isDarkMode ? .dark : .light
+    }
+    
     func setupViews() {
-        if let userInterfaceStyle = UserDefaults.standard.value(forKey: "isDarkMode") as? Bool,
-           let appLocking = UserDefaults.standard.value(forKey: "isLockedApp") as? Bool {
+        if let userInterfaceStyle = UserDefaults.standard.value(forKey: "isDarkMode") as? Bool {
             lightDarkSwitch.isOn = userInterfaceStyle ? true : false
+        }
+        
+        if let appLocking = UserDefaults.standard.value(forKey: "isLockedApp") as? Bool {
             biometricSwitch.isOn = appLocking ? true : false
         }
         
@@ -65,7 +75,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     
     @objc func lightDarkSwitchChanged(_ sender: UISwitch) {
         UserDefaults.standard.set(sender.isOn, forKey: "isDarkMode")
-        NotificationCenter.default.post(name: NSNotification.Name("darkModeChanged"), object: nil)
+        handleDarkModeChange()
     }
     
     @objc func biometricSwitchChanged(_ sender: UISwitch) {

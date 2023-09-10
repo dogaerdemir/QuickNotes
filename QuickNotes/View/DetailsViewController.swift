@@ -22,6 +22,14 @@ class DetailsViewController: UIViewController, UITextViewDelegate
         setupViews()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationItem.title = chosenNote?.title ?? "New Note"
+        
+        let isDarkMode = UserDefaults.standard.bool(forKey: "isDarkMode")
+        self.view.overrideUserInterfaceStyle = isDarkMode ? .dark : .light
+    }
+    
     func setupViews() {
         textField.layer.borderWidth = 0.3
         textField.layer.borderColor = UIColor.gray.cgColor
@@ -62,11 +70,6 @@ class DetailsViewController: UIViewController, UITextViewDelegate
         titleField.inputAccessoryView = toolbar
     }
     
-    @objc func handleDarkModeChange() {
-        let isDarkMode = UserDefaults.standard.bool(forKey: "isDarkMode")
-        view.overrideUserInterfaceStyle = isDarkMode ? .dark : .light
-    }
-    
     @objc func hideKeyboard() {
         view.endEditing(true)
     }
@@ -74,14 +77,14 @@ class DetailsViewController: UIViewController, UITextViewDelegate
     @IBAction func saveButtonClicked(_ sender: Any) {
         viewModel?.saveNewNote(title: titleField.text!, note: textField.text!)
         delegate?.didAddNote()
-        dismiss(animated: true)
+        navigationController?.popViewController(animated: true)
     }
     
     @IBAction func editButtonClicked(_ sender: Any) {
         if let id = chosenNote?.id, let text = textField.text, let title = titleField.text {
             viewModel?.updateExistingNote(id: id, updatedTitle: title, updatedNote: text)
             delegate?.didAddNote()
-            dismiss(animated: true)
+            navigationController?.popViewController(animated: true)
         }
     }
 }

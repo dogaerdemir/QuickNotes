@@ -12,6 +12,7 @@
 		DA053AE12AACBDEC00D24484 /* UIViewController + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA053AE02AACBDEC00D24484 /* UIViewController + Extension.swift */; };
 		DA12EC702AADDC7500C00E9B /* MainTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA12EC6E2AADDC7500C00E9B /* MainTableViewCell.swift */; };
 		DA12EC712AADDC7500C00E9B /* MainTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DA12EC6F2AADDC7500C00E9B /* MainTableViewCell.xib */; };
+		DA12EC742AADF92100C00E9B /* DropDown in Frameworks */ = {isa = PBXBuildFile; productRef = DA12EC732AADF92100C00E9B /* DropDown */; };
 		DA1EC83B2AACD8D700515772 /* DetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA1EC83A2AACD8D700515772 /* DetailsViewModel.swift */; };
 		DA1EC83D2AAD329000515772 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA1EC83C2AAD329000515772 /* SettingsViewController.swift */; };
 		DA631BBF27EDB84F0013867C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA631BBE27EDB84F0013867C /* AppDelegate.swift */; };
@@ -49,6 +50,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DA12EC742AADF92100C00E9B /* DropDown in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -100,6 +102,13 @@
 			path = MainTableViewCell;
 			sourceTree = "<group>";
 		};
+		DA12EC752AAE1CF500C00E9B /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Manager;
+			sourceTree = "<group>";
+		};
 		DA631BB227EDB84F0013867C = {
 			isa = PBXGroup;
 			children = (
@@ -119,6 +128,7 @@
 		DA631BBD27EDB84F0013867C /* QuickNotes */ = {
 			isa = PBXGroup;
 			children = (
+				DA12EC752AAE1CF500C00E9B /* Manager */,
 				DA053ADF2AACBDC100D24484 /* Extensions */,
 				DA053ADB2AACBBDF00D24484 /* Model */,
 				DA053AE22AACBE8600D24484 /* View */,
@@ -150,6 +160,9 @@
 			dependencies = (
 			);
 			name = QuickNotes;
+			packageProductDependencies = (
+				DA12EC732AADF92100C00E9B /* DropDown */,
+			);
 			productName = QuickNotes;
 			productReference = DA631BBB27EDB84F0013867C /* QuickNotes.app */;
 			productType = "com.apple.product-type.application";
@@ -178,6 +191,9 @@
 				Base,
 			);
 			mainGroup = DA631BB227EDB84F0013867C;
+			packageReferences = (
+				DA12EC722AADF92100C00E9B /* XCRemoteSwiftPackageReference "DropDown" */,
+			);
 			productRefGroup = DA631BBC27EDB84F0013867C /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -434,6 +450,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		DA12EC722AADF92100C00E9B /* XCRemoteSwiftPackageReference "DropDown" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/AssistoLab/DropDown";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		DA12EC732AADF92100C00E9B /* DropDown */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DA12EC722AADF92100C00E9B /* XCRemoteSwiftPackageReference "DropDown" */;
+			productName = DropDown;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		DA631BC727EDB84F0013867C /* QuickNotes.xcdatamodeld */ = {
