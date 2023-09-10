@@ -18,6 +18,8 @@ class DetailsViewController: UIViewController, UITextViewDelegate
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let context = appDelegate.persistentContainer.viewContext
         viewModel = DetailsViewModel(context: context)
+        
+        setupViews()
     }
     
     func setupViews() {
@@ -76,8 +78,8 @@ class DetailsViewController: UIViewController, UITextViewDelegate
     }
     
     @IBAction func editButtonClicked(_ sender: Any) {
-        if let id = chosenNote?.id {
-            viewModel?.updateExistingNote(id: id, updatedTitle: titleField.text!, updatedNote: textField.text!)
+        if let id = chosenNote?.id, let text = textField.text, let title = titleField.text {
+            viewModel?.updateExistingNote(id: id, updatedTitle: title, updatedNote: text)
             delegate?.didAddNote()
             dismiss(animated: true)
         }

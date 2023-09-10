@@ -11,31 +11,29 @@ import CoreData
 class DetailsViewModel {
     
     weak var delegate: NoteDelegate?
-    
-    // CoreData'ya erişim için Context
+
     private let context: NSManagedObjectContext
     
     init(context: NSManagedObjectContext) {
         self.context = context
     }
     
-    // Yeni bir not kaydet
     func saveNewNote(title: String, note: String) {
         let newNote = NSEntityDescription.insertNewObject(forEntityName: "Notes", into: context)
         newNote.setValue(title, forKey: "title")
         newNote.setValue(note, forKey: "note")
         newNote.setValue(UUID(), forKey: "id")
+        newNote.setValue(Date(), forKey: "createdDate")
+        newNote.setValue(Date(), forKey: "editedDate")
         
         do {
             try context.save()
-            
             print("success")
         } catch {
             print("error")
         }
     }
     
-    // Mevcut bir notu güncelle
     func updateExistingNote(id: UUID, updatedTitle: String, updatedNote: String) {
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Notes")
         fetchRequest.predicate = NSPredicate(format: "id = %@", id as CVarArg)
@@ -46,15 +44,14 @@ class DetailsViewModel {
             if let objectToUpdate = results.first as? NSManagedObject {
                 objectToUpdate.setValue(updatedTitle, forKey: "title")
                 objectToUpdate.setValue(updatedNote, forKey: "note")
+                objectToUpdate.setValue(Date(), forKey: "editedDate")
                 try context.save()
-                
             }
         } catch {
             print("error")
         }
     }
     
-    // Belirli bir notun detayını çek
     func fetchNoteDetail(by id: UUID) -> (title: String, note: String)? {
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Notes")
         fetchRequest.predicate = NSPredicate(format: "id = %@", id as CVarArg)

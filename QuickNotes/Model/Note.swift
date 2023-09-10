@@ -11,4 +11,6 @@ struct Note {
     var title: String
     var content: String
     var id: UUID
+    var createdDate: Date
+    var editedDate: Date
 }

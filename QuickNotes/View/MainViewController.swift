@@ -101,7 +101,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "mainTableViewCell", for: indexPath) as? MainTableViewCell {
-            cell.updateCell(title: notes[indexPath.row].title, created: "10/09/2023", edited: "10/09/2023")
+            cell.updateCell(note: notes[indexPath.row])
             return cell
         }
 

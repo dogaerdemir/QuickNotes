@@ -23,8 +23,13 @@ class MainViewModel {
             let results = try context.fetch(fetchRequest)
             if results.count > 0 {
                 for result in results as! [NSManagedObject] {
-                    if let title = result.value(forKey: "title") as? String, let noteContent = result.value(forKey: "note") as? String, let id = result.value(forKey: "id") as? UUID {
-                        let note = Note(title: title, content: noteContent, id: id)
+                    if let title = result.value(forKey: "title") as? String,
+                       let noteContent = result.value(forKey: "note") as? String,
+                       let id = result.value(forKey: "id") as? UUID,
+                       let createdDate = result.value(forKey: "createdDate") as? Date,
+                       let editedDate = result.value(forKey: "editedDate") as? Date {
+                        
+                        let note = Note(title: title, content: noteContent, id: id, createdDate: createdDate, editedDate: editedDate)
                         notes.append(note)
                     }
                 }
