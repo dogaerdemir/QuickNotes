@@ -10,73 +10,78 @@ protocol NoteDelegate: AnyObject {
 class MainViewController: UIViewController, NoteDelegate {
     
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var authSwitch: UISwitch!
     
     var notes: [Note] = []
     var selectedNote: Note?
-    
-    let userDefaults = UserDefaults.standard
     let viewModel = MainViewModel()
     
-    override func viewDidAppear(_ animated: Bool) {
-        authSwitch.isOn = userDefaults.bool(forKey: "switchValue")
+    override func viewDidLoad() {
+        setupViews()
     }
     
-    override func viewDidLoad() {
-        authSwitch.isOn = userDefaults.bool(forKey: "switchValue")
+    func setupViews() {
+        tableView.register(UINib(nibName: "MainTableViewCell", bundle: nil), forCellReuseIdentifier: "mainTableViewCell")
         
-        if authSwitch.isOn {
-            authenticate()
-        } else {
-            self.getData()
+        let isLockedApp = UserDefaults.standard.bool(forKey: "isLockedApp")
+        if isLockedApp { authenticate() } else { self.getData() }
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(handleDarkModeChange), name: NSNotification.Name("darkModeChanged"), object: nil)
+        let blockedVC = UIViewController() as? DetailsViewController
+        _ = blockedVC?.view
+        
+        if let tabBar = self.tabBarController?.tabBar {
+            tabBar.shadowImage = UIImage()
+            tabBar.backgroundImage = UIImage()
+            
+            let topBorder = CALayer()
+            topBorder.frame = CGRect(x: 0, y: 0, width: tabBar.frame.width, height: 0.5)
+            topBorder.backgroundColor = UIColor.gray.cgColor
+            
+            tabBar.layer.addSublayer(topBorder)
+            tabBar.clipsToBounds = true
         }
+    }
+    
+    func authenticate() {
+        let localAuthenticationContext = LAContext()
+        localAuthenticationContext.localizedFallbackTitle = "Use pin code"
+        localAuthenticationContext.localizedCancelTitle = "Exit"
+        
+        var authorizationError: NSError?
+        let reason = "Authentication is needed to access to app."
+        
+        if localAuthenticationContext.canEvaluatePolicy(.deviceOwnerAuthentication, error: &authorizationError) {
+            localAuthenticationContext.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: reason) { success, evaluateError in
+                if success {
+                    DispatchQueue.main.async() {
+                        self.showToast(message: "Success", duration: 1.5)
+                        self.getData()
+                    }
+                }
+                else { exit(-1) }
+            }
+        }
+        else { guard let error = authorizationError else { return } }
     }
     
     func didAddNote() {
         self.notes = viewModel.fetchNotes()
         self.tableView.reloadData()
     }
-
-    func authenticate() {
-        let localAuthenticationContext = LAContext()
-        localAuthenticationContext.localizedFallbackTitle = "Use pin code"
-        localAuthenticationContext.localizedCancelTitle = "Exit"
-
-        var authorizationError: NSError?
-        let reason = "Authentication is needed to access to app."
-
-        if localAuthenticationContext.canEvaluatePolicy(.deviceOwnerAuthentication, error: &authorizationError) {
-            
-            localAuthenticationContext.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: reason) { success, evaluateError in
-                if success {
-                    DispatchQueue.main.async()
-                    {
-                        self.showToast(message: "Success", duration: 1.5)
-                        self.getData()
-                    }
-                    
-                }
-                else {
-                    exit(-1)
-                }
-            }
-        }
-        else {
-            guard let error = authorizationError else {
-                return
-            }
-            print(error)
-        }
-    }
     
-    @IBAction func addButtonAction(_ sender: Any) {
-        selectedNote = nil
-        performSegue(withIdentifier: "toDetailsVC", sender: nil)
+    @objc func handleDarkModeChange() {
+        let isDarkMode = UserDefaults.standard.bool(forKey: "isDarkMode")
+        view.overrideUserInterfaceStyle = isDarkMode ? .dark : .light
     }
     
     @objc func getData() {
         self.notes = viewModel.fetchNotes()
         self.tableView.reloadData()
+    }
+    
+    @IBAction func addButtonAction(_ sender: Any) {
+        selectedNote = nil
+        performSegue(withIdentifier: "toDetailsVC", sender: nil)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -85,28 +90,6 @@ class MainViewController: UIViewController, NoteDelegate {
             destinationVC.chosenNote = selectedNote
             destinationVC.delegate = self
         }
-    }
-        
-    override func viewWillAppear(_ animated: Bool) {
-        NotificationCenter.default.addObserver(self, selector: #selector(getData), name: NSNotification.Name(rawValue: "newData"), object: nil)
-    }
-
-    @IBAction func switchChanged(_ sender: Any) {
-        userDefaults.set((sender as AnyObject).isOn, forKey: "switchValue")
-                
-            if authSwitch.isOn {
-                let alert = UIAlertController(title: "Biometrics have been enabled", message: "", preferredStyle: UIAlertController.Style.alert)
-                let exitButton = UIAlertAction(title: "Quit", style: UIAlertAction.Style.destructive){ UIAlertAction in
-                    exit(0)
-                }
-                let continueButton = UIAlertAction(title: "Keep using", style: UIAlertAction.Style.default){ UIAlertAction in
-                    self.dismiss(animated: true)
-                }
-                
-                alert.addAction(exitButton)
-                alert.addAction(continueButton)
-                self.present(alert, animated: true, completion: nil)
-            }
     }
 }
 
@@ -117,9 +100,12 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell()
-        cell.textLabel?.text = notes[indexPath.row].title
-        return cell
+        if let cell = tableView.dequeueReusableCell(withIdentifier: "mainTableViewCell", for: indexPath) as? MainTableViewCell {
+            cell.updateCell(title: notes[indexPath.row].title, created: "10/09/2023", edited: "10/09/2023")
+            return cell
+        }
+
+        return UITableViewCell()
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -129,7 +115,7 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            let alert = UIAlertController(title: "Deleting", message: "Warning: This cannot be undone", preferredStyle: .alert)
+            let alert = UIAlertController(title: "Deleting", message: "This cannot be undone", preferredStyle: .alert)
             let deleteButton = UIAlertAction(title: "Delete", style: .destructive) { _ in
                 let idToDelete = self.notes[indexPath.row].id
                 if self.viewModel.deleteNote(with: idToDelete) {

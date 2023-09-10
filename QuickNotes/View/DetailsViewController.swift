@@ -3,14 +3,12 @@ import CoreData
 
 class DetailsViewController: UIViewController, UITextViewDelegate
 {
-
     @IBOutlet weak var titleField: UITextField!
     @IBOutlet weak var textField: UITextView!
     @IBOutlet weak var saveButton: UIButton!
     @IBOutlet weak var editButton: UIButton!
     
     var viewModel: DetailsViewModel?
-    
     var chosenNote : Note?
     weak var delegate: NoteDelegate?
     
@@ -20,7 +18,15 @@ class DetailsViewController: UIViewController, UITextViewDelegate
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let context = appDelegate.persistentContainer.viewContext
         viewModel = DetailsViewModel(context: context)
+    }
+    
+    func setupViews() {
+        textField.layer.borderWidth = 0.3
+        textField.layer.borderColor = UIColor.gray.cgColor
+        textField.layer.cornerRadius = 8
         
+        let isDarkMode = UserDefaults.standard.bool(forKey: "isDarkMode")
+        self.view.overrideUserInterfaceStyle = isDarkMode ? .dark : .light
         setupKeyboardToolbar()
         
         self.textField.delegate = self
@@ -41,6 +47,28 @@ class DetailsViewController: UIViewController, UITextViewDelegate
         view.addGestureRecognizer(gestureRecognizer)
     }
     
+    func setupKeyboardToolbar() {
+        let toolbar = UIToolbar()
+        
+        let space = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        let done = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(hideKeyboard))
+        
+        toolbar.setItems([space, done], animated: true)
+        toolbar.sizeToFit()
+        
+        textField.inputAccessoryView = toolbar
+        titleField.inputAccessoryView = toolbar
+    }
+    
+    @objc func handleDarkModeChange() {
+        let isDarkMode = UserDefaults.standard.bool(forKey: "isDarkMode")
+        view.overrideUserInterfaceStyle = isDarkMode ? .dark : .light
+    }
+    
+    @objc func hideKeyboard() {
+        view.endEditing(true)
+    }
+    
     @IBAction func saveButtonClicked(_ sender: Any) {
         viewModel?.saveNewNote(title: titleField.text!, note: textField.text!)
         delegate?.didAddNote()
@@ -54,29 +82,11 @@ class DetailsViewController: UIViewController, UITextViewDelegate
             dismiss(animated: true)
         }
     }
-    
-    @objc func hideKeyboard() {
-        view.endEditing(true)
-    }
-        
+}
+
+// MARK: - UITextFieldDelegate
+extension DetailsViewController: UITextFieldDelegate {
     func textViewDidChange(_ textView: UITextView) {
         editButton.isEnabled = true
-    }
-    
-    func setupKeyboardToolbar() {
-        let toolbar = UIToolbar()
-        
-        let space = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        let done = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(doneButtonClicked))
-        
-        toolbar.setItems([space, done], animated: true)
-        toolbar.sizeToFit()
-        
-        textField.inputAccessoryView = toolbar
-        titleField.inputAccessoryView = toolbar
-    }
-        
-    @objc func doneButtonClicked() {
-        view.endEditing(true)
     }
 }
