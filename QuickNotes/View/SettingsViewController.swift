@@ -76,6 +76,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     @objc func lightDarkSwitchChanged(_ sender: UISwitch) {
         UserDefaults.standard.set(sender.isOn, forKey: "isDarkMode")
         handleDarkModeChange()
+        
     }
     
     @objc func biometricSwitchChanged(_ sender: UISwitch) {

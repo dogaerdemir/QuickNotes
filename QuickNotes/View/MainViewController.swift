@@ -15,7 +15,10 @@ class MainViewController: UIViewController, NoteDelegate {
     var selectAllButton: UIBarButtonItem!
     
     var notes: [Note] = []
+    var filteredNotes: [Note] = []
     var selectedNote: Note?
+    
+    let searchController = UISearchController(searchResultsController: nil)
     
     lazy var dropDown : DropDown = {
         let menu = DropDown()
@@ -72,9 +75,9 @@ class MainViewController: UIViewController, NoteDelegate {
         super.viewWillAppear(animated)
         self.navigationItem.title = "Notes"
         
-        let isDarkMode = UserDefaults.standard.bool(forKey: "isDarkMode")
-        self.view.overrideUserInterfaceStyle = isDarkMode ? .dark : .light
-        
+        handleDarkModeChange()
+        //self.navigationController?.navigationBar.prefersLargeTitles = true
+        //self.tableView.contentOffset = CGPoint(x: 0, y: -self.searchController.searchBar.frame.height)
     }
     
     func setupViews() {
@@ -125,6 +128,11 @@ class MainViewController: UIViewController, NoteDelegate {
             tabBar.layer.addSublayer(topBorder)
             tabBar.clipsToBounds = true
         }
+        
+        searchController.searchResultsUpdater = self
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.placeholder = "Search in Notes"
+        navigationItem.searchController = searchController
     }
     
     @objc func showDropDown() {
@@ -191,6 +199,22 @@ class MainViewController: UIViewController, NoteDelegate {
         } else {
             selectAllButton.title = "Select All"
         }
+    }
+    
+    func updateDropDownAppearance() {
+        let isDarkMode = UserDefaults.standard.bool(forKey: "isDarkMode")
+        
+        if isDarkMode {
+            dropDown.backgroundColor = UIColor(red: 40/255, green: 40/255, blue: 40/255, alpha: 1)
+            dropDown.textColor = .white
+        } else {
+            dropDown.backgroundColor = .white
+            dropDown.textColor = .black
+        }
+    }
+    
+    func isFiltering() -> Bool {
+        return searchController.isActive && !(searchController.searchBar.text?.isEmpty ?? true)
     }
     
     @objc func activateMultiSelectMode() {
@@ -260,6 +284,7 @@ class MainViewController: UIViewController, NoteDelegate {
     @objc func handleDarkModeChange() {
         let isDarkMode = UserDefaults.standard.bool(forKey: "isDarkMode")
         view.overrideUserInterfaceStyle = isDarkMode ? .dark : .light
+        updateDropDownAppearance()
     }
     
     @objc func getData() {
@@ -284,15 +309,16 @@ class MainViewController: UIViewController, NoteDelegate {
 // MARK: - UITableViewDelegate and UITableViewDataSource
 extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return notes.count
+        return isFiltering() ? filteredNotes.count : notes.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "mainTableViewCell", for: indexPath) as? MainTableViewCell {
-            cell.updateCell(note: notes[indexPath.row])
+            let note = isFiltering() ? filteredNotes[indexPath.row] : notes[indexPath.row]
+            cell.updateCell(note: note)
             return cell
         }
-
+        
         return UITableViewCell()
     }
     
@@ -326,5 +352,24 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
             alert.addAction(dismissButton)
             self.present(alert, animated: true, completion: nil)
         }
+    }
+}
+
+extension MainViewController: UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        if let text = searchController.searchBar.text, !text.isEmpty {
+            print("Search Text: \(text)")
+            filteredNotes = notes.filter { note in
+                let isTitleMatching = note.title.localizedCaseInsensitiveContains(text)
+                let isContentMatching = note.content.localizedCaseInsensitiveContains(text)
+                print("Note Title: \(note.title), isTitleMatching: \(isTitleMatching)")
+                print("Note Content: \(note.content), isContentMatching: \(isContentMatching)")
+                return isTitleMatching || isContentMatching
+            }
+            print("Filtered Notes: \(filteredNotes)")
+        } else {
+            filteredNotes = notes
+        }
+        tableView.reloadData()
     }
 }
