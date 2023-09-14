@@ -284,6 +284,7 @@ class MainViewController: UIViewController, NoteDelegate {
     @objc func handleDarkModeChange() {
         let isDarkMode = UserDefaults.standard.bool(forKey: "isDarkMode")
         view.overrideUserInterfaceStyle = isDarkMode ? .dark : .light
+        self.tabBarController?.overrideUserInterfaceStyle = isDarkMode ? .dark : .light
         updateDropDownAppearance()
     }
     
@@ -299,7 +300,7 @@ class MainViewController: UIViewController, NoteDelegate {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "toDetailsVC" {
-            let destinationVC = segue.destination as! DetailsViewController
+            let destinationVC = segue.destination as! DetailsNoteViewController
             destinationVC.chosenNote = selectedNote
             destinationVC.delegate = self
         }
@@ -325,7 +326,14 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if !tableView.isEditing {
             selectedNote = notes[indexPath.row]
-            performSegue(withIdentifier: "toDetailsVC", sender: nil)
+            
+            let storyboard = UIStoryboard(name: "DetailsParchmentView", bundle: nil)
+            if let destination = storyboard.instantiateViewController(withIdentifier: "detailsParchmentView") as? DetailsParchmentViewController {
+                destination.chosenNote = selectedNote
+                //destination.delegate = self
+                navigationController?.pushViewController(destination, animated: true)
+            }
+            
         } else {
             updateSelectAllButton()
         }

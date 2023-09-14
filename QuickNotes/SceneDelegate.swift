@@ -10,28 +10,30 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
     
-        guard let _ = (scene as? UIWindowScene) else { return }
+        guard let windowScene = (scene as? UIWindowScene) else { return }
         
-        if let userInterfaceStyle = UserDefaults.standard.value(forKey: "isDarkMode") as? Bool {
-            var style: UIUserInterfaceStyle
-            if userInterfaceStyle == true {
-                style = .dark
-            } else {
-                style = .light
-            }
-            
-            if let windowScene = scene as? UIWindowScene {
-                self.window = UIWindow(windowScene: windowScene)
-                self.window?.overrideUserInterfaceStyle = style
-                
-                let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                if let initialViewController = storyboard.instantiateInitialViewController() {
-                    self.window?.rootViewController = initialViewController
-                }
-                
-                self.window?.makeKeyAndVisible()
-            }
-        }
+        let window = UIWindow(windowScene: windowScene)
+        
+        let tabBarController = UITabBarController()
+        
+        // Birinci Tab için
+        let firstStoryboard = UIStoryboard(name: "MainView", bundle: nil)
+        let firstVC = firstStoryboard.instantiateInitialViewController()!
+        let firstNav = UINavigationController(rootViewController: firstVC)
+        firstNav.tabBarItem = UITabBarItem(title: "Notes", image: UIImage(systemName: "list.clipboard"), selectedImage: UIImage(systemName: "list.clipboard.fill"))
+        
+        // İkinci Tab için
+        let secondStoryboard = UIStoryboard(name: "SettingsView", bundle: nil)
+        let secondVC = secondStoryboard.instantiateInitialViewController()!
+        let secondNav = UINavigationController(rootViewController: secondVC)
+        secondNav.tabBarItem = UITabBarItem(title: "Settings", image: UIImage(systemName: "gearshape"), selectedImage: UIImage(systemName: "gearshape.fill"))
+        
+        
+        tabBarController.viewControllers = [firstNav, secondNav]
+        
+        window.rootViewController = tabBarController
+        self.window = window
+        window.makeKeyAndVisible()
         
     }
 

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Vl6-rn-34J">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Main View Controller-->
+        <scene sceneID="VY3-k7-TiU">
+            <objects>
+                <viewController storyboardIdentifier="mainView" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Vl6-rn-34J" customClass="MainViewController" customModule="QuickNotes" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="P05-bA-YWb">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsMultipleSelection="YES" rowHeight="110" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="jd3-IE-0u3">
+                                <rect key="frame" x="0.0" y="59" width="393" height="759"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="Vl6-rn-34J" id="pVh-hs-bQd"/>
+                                    <outlet property="delegate" destination="Vl6-rn-34J" id="aD5-wj-iMe"/>
+                                </connections>
+                            </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lCE-IQ-MNy">
+                                <rect key="frame" x="318" y="693" width="50" height="50"/>
+                                <color key="backgroundColor" systemColor="linkColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="APD-rz-ao9"/>
+                                    <constraint firstAttribute="width" constant="50" id="ToR-ow-FQZ"/>
+                                </constraints>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" imagePadding="0.0">
+                                    <imageReference key="image" image="pencil.tip.crop.circle.badge.plus" catalog="system" symbolScale="large"/>
+                                    <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="pointSize" pointSize="30" scale="default"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="addButtonAction:" destination="Vl6-rn-34J" eventType="touchUpInside" id="7FR-Fw-cZL"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="8dd-H2-OzA"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="8dd-H2-OzA" firstAttribute="bottom" secondItem="lCE-IQ-MNy" secondAttribute="bottom" constant="18" id="Mp1-1b-C8P"/>
+                            <constraint firstItem="jd3-IE-0u3" firstAttribute="top" secondItem="8dd-H2-OzA" secondAttribute="top" id="iu4-yl-fae"/>
+                            <constraint firstItem="jd3-IE-0u3" firstAttribute="bottom" secondItem="8dd-H2-OzA" secondAttribute="bottom" id="kt0-Wm-rQl"/>
+                            <constraint firstItem="jd3-IE-0u3" firstAttribute="trailing" secondItem="8dd-H2-OzA" secondAttribute="trailing" id="l5Y-Mf-Zht"/>
+                            <constraint firstItem="jd3-IE-0u3" firstAttribute="leading" secondItem="8dd-H2-OzA" secondAttribute="leading" id="lEh-R5-Hqd"/>
+                            <constraint firstItem="8dd-H2-OzA" firstAttribute="trailing" secondItem="lCE-IQ-MNy" secondAttribute="trailing" constant="12" id="qkg-E8-fZn"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="cR4-2R-huj"/>
+                    <connections>
+                        <outlet property="addButton" destination="lCE-IQ-MNy" id="xaZ-gB-quA"/>
+                        <outlet property="tableView" destination="jd3-IE-0u3" id="MRd-yL-znO"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="n9H-Yw-TN6" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1989.2307692307691" y="79.620853080568722"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="pencil.tip.crop.circle.badge.plus" catalog="system" width="128" height="114"/>
+        <systemColor name="linkColor">
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

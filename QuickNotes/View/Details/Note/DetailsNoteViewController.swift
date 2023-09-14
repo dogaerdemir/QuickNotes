@@ -1,7 +1,7 @@
 import UIKit
 import CoreData
 
-class DetailsViewController: UIViewController, UITextViewDelegate
+class DetailsNoteViewController: UIViewController, UITextViewDelegate
 {
     @IBOutlet weak var titleField: UITextField!
     @IBOutlet weak var textField: UITextView!
@@ -90,7 +90,7 @@ class DetailsViewController: UIViewController, UITextViewDelegate
 }
 
 // MARK: - UITextFieldDelegate
-extension DetailsViewController: UITextFieldDelegate {
+extension DetailsNoteViewController: UITextFieldDelegate {
     func textViewDidChange(_ textView: UITextView) {
         editButton.isEnabled = true
     }

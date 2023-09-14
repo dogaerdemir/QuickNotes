@@ -8,6 +8,15 @@
         "branch" : "master",
         "revision" : "2ab6f6ce19f0117d1a76ea043ef8f57722c65d16"
       }
+    },
+    {
+      "identity" : "parchment",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/rechsteiner/Parchment",
+      "state" : {
+        "branch" : "main",
+        "revision" : "13aad3e9308e8a4e38cb579430dbf66465418777"
+      }
     }
   ],
   "version" : 2
