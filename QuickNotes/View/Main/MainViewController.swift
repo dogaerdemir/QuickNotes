@@ -57,7 +57,6 @@ class MainViewController: UIViewController, NoteDelegate {
         } else {
             menu.backgroundColor = .white
             menu.textColor = .black
-            
         }
         
         return menu
@@ -297,17 +296,10 @@ class MainViewController: UIViewController, NoteDelegate {
         selectedNote = nil
         performSegue(withIdentifier: "toDetailsVC", sender: nil)
     }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "toDetailsVC" {
-            let destinationVC = segue.destination as! DetailsNoteViewController
-            destinationVC.chosenNote = selectedNote
-            destinationVC.delegate = self
-        }
-    }
 }
 
 // MARK: - UITableViewDelegate and UITableViewDataSource
+
 extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return isFiltering() ? filteredNotes.count : notes.count
@@ -329,11 +321,9 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
             
             let storyboard = UIStoryboard(name: "DetailsParchmentView", bundle: nil)
             if let destination = storyboard.instantiateViewController(withIdentifier: "detailsParchmentView") as? DetailsParchmentViewController {
-                destination.chosenNote = selectedNote
-                //destination.delegate = self
+                destination.updateChildViewControllers(withNote: selectedNote!, delegate: self)
                 navigationController?.pushViewController(destination, animated: true)
             }
-            
         } else {
             updateSelectAllButton()
         }

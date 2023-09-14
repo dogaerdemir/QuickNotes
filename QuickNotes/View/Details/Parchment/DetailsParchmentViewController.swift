@@ -19,13 +19,14 @@ class DetailsParchmentViewController: UIViewController {
     
     var chosenNote: Note? {
         didSet {
-            // Çocuk view controller'lara veri aktarmak için bir yol oluşturun.
             if let detailsNoteVC = vcs.first as? DetailsNoteViewController {
                 detailsNoteVC.chosenNote = chosenNote
             }
         }
     }
     
+    var currentDarkModeStatus: Bool?
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setPagingControllers()
@@ -33,16 +34,25 @@ class DetailsParchmentViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
         self.navigationItem.title = "Detay"
+        
+        // Triggers only if there is a change in dark mode status
+        let newDarkModeStatus = UserDefaults.standard.bool(forKey: "isDarkMode")
+        if currentDarkModeStatus != newDarkModeStatus {
+            setPagingControllers()
+            currentDarkModeStatus = newDarkModeStatus
+        }
+
     }
     
     private func getPagingOptions() -> PagingOptions {
         
+        let isDarkMode = UserDefaults.standard.bool(forKey: "isDarkMode")
+        
         var options = PagingOptions()
-        options.backgroundColor = .white
+        options.backgroundColor = isDarkMode ? .black : .white
+        options.selectedBackgroundColor = isDarkMode ? .black : .white
         options.selectedScrollPosition = .preferCentered
-        options.selectedBackgroundColor = .white
         options.selectedFont = UIFont.systemFont(ofSize: 12, weight: .bold)
         options.font = UIFont.systemFont(ofSize: 12, weight: .bold)
         options.selectedTextColor = UIColor.purple
@@ -51,7 +61,7 @@ class DetailsParchmentViewController: UIViewController {
         options.indicatorOptions = .visible(height: 2, zIndex: 0, spacing: UIEdgeInsets.init(top: 0, left: 2, bottom: 0, right: 2), insets: .zero)
         options.contentInteraction = .scrolling
         options.borderColor = .darkGray
-        options.borderOptions = .visible(height: 0.6, zIndex: 0, insets: .zero)
+        options.borderOptions = .visible(height: 0.8, zIndex: 0, insets: .zero)
         options.menuItemSize = .sizeToFit(minWidth: self.view.frame.size.width, height: 150)
         
         return options
@@ -80,6 +90,15 @@ class DetailsParchmentViewController: UIViewController {
         
         pagingViewController.didMove(toParent: self)
     }
+    
+    func updateChildViewControllers(withNote note: Note, delegate: NoteDelegate) {
+        if let detailsNoteVC = vcs[0] as? DetailsNoteViewController {
+            detailsNoteVC.chosenNote = note
+            detailsNoteVC.delegate = delegate
+        }
+    }
+    
+    
 }
 
 extension DetailsParchmentViewController: PagingViewControllerDataSource {
