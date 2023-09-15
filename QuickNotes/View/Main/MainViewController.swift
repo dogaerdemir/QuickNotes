@@ -41,7 +41,7 @@ class MainViewController: UIViewController {
             }
         }
         
-        menu.width = 220
+        menu.width = 225
         
         let isDarkMode = UserDefaults.standard.bool(forKey: "isDarkMode")
         
@@ -78,9 +78,14 @@ class MainViewController: UIViewController {
             handleDarkModeChange() // Triggers only if there is a change in dark mode status
             currentDarkModeStatus = newDarkModeStatus
         }
+        navigationItem.hidesSearchBarWhenScrolling = false
         //self.navigationController?.navigationBar.prefersLargeTitles = true
-        //self.tableView.contentOffset = CGPoint(x: 0, y: -self.searchController.searchBar.frame.height)
     }
+    
+    /*override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        navigationItem.hidesSearchBarWhenScrolling = true
+    }*/
     
     func setupViews() {
         tableView.register(UINib(nibName: "MainTableViewCell", bundle: nil), forCellReuseIdentifier: "mainTableViewCell")
@@ -135,6 +140,7 @@ class MainViewController: UIViewController {
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.placeholder = "Search in Notes"
         navigationItem.searchController = searchController
+        
     }
     
     @objc func showDropDown() {
@@ -178,7 +184,7 @@ class MainViewController: UIViewController {
             localAuthenticationContext.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: reason) { success, evaluateError in
                 if success {
                     DispatchQueue.main.async() {
-                        self.showToast(message: "Success", duration: 1.5)
+                        self.showToast(message: "Success", duration: .short)
                         self.getData()
                         self.sortNotes(by: self.currentSortMethod ?? "Alphabetical (A-Z)")
                     }
@@ -361,15 +367,11 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
 extension MainViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         if let text = searchController.searchBar.text, !text.isEmpty {
-            print("Search Text: \(text)")
             filteredNotes = notes.filter { note in
                 let isTitleMatching = note.title.localizedCaseInsensitiveContains(text)
                 let isContentMatching = note.content.localizedCaseInsensitiveContains(text)
-                print("Note Title: \(note.title), isTitleMatching: \(isTitleMatching)")
-                print("Note Content: \(note.content), isContentMatching: \(isContentMatching)")
                 return isTitleMatching || isContentMatching
             }
-            print("Filtered Notes: \(filteredNotes)")
         } else {
             filteredNotes = notes
         }

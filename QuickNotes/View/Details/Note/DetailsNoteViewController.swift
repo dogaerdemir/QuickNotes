@@ -1,15 +1,19 @@
 import UIKit
 import CoreData
 
-class DetailsNoteViewController: UIViewController, UITextViewDelegate
-{
+class DetailsNoteViewController: UIViewController {
+    
     @IBOutlet weak var titleField: UITextField!
     @IBOutlet weak var contentField: UITextView!
     @IBOutlet weak var adaptiveButton: UIButton!
     
     var viewModel: DetailsViewModel?
     var chosenNote: Note?
+    var originalNoteTitle: String?
+    var originalNoteContent: String?
     var isNewMode: Bool?
+    var placeholderLabel : UILabel!
+    
     weak var delegate: NoteDelegate?
     
     override func viewDidLoad() {
@@ -40,28 +44,32 @@ class DetailsNoteViewController: UIViewController, UITextViewDelegate
         setupKeyboardToolbar()
         
         titleField.delegate = self
+        
+        titleField.addTarget(self, action: #selector(self.textFieldDidChange(_:)), for: .editingChanged)
         contentField.delegate = self
-        
-        
         
         if let note = chosenNote {
             adaptiveButton.setTitle("Edit", for: .normal)
+            adaptiveButton.isEnabled = false
             titleField.text = note.title
             contentField.text = note.content
+            setupOriginalNote()
             isNewMode = false
+            showPlaceholder()
         } else {
-            adaptiveButton.setTitle("Save", for: .normal)
-            let placeholderAttributes: [NSAttributedString.Key : Any] = [
-                .font: UIFont.boldSystemFont(ofSize: 19),
-                .foregroundColor: UIColor.lightGray
-            ]
-            
-            contentField.attributedText = NSAttributedString(string: "Note", attributes: placeholderAttributes)
             isNewMode = true
+            showPlaceholder()
+            adaptiveButton.setTitle("Save", for: .normal)
+            //titleField.becomeFirstResponder()
         }
         
         let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
         view.addGestureRecognizer(gestureRecognizer)
+    }
+    
+    func setupOriginalNote() {
+        originalNoteTitle = titleField.text
+        originalNoteContent = contentField.text
     }
     
     func setupKeyboardToolbar() {
@@ -75,6 +83,32 @@ class DetailsNoteViewController: UIViewController, UITextViewDelegate
         
         contentField.inputAccessoryView = toolbar
         titleField.inputAccessoryView = toolbar
+    }
+    
+    func showPlaceholder() {
+        placeholderLabel = UILabel()
+        placeholderLabel.text = "Note"
+        placeholderLabel.font = .boldSystemFont(ofSize: 19)
+        placeholderLabel.sizeToFit()
+        contentField.addSubview(placeholderLabel)
+        placeholderLabel.frame.origin = CGPoint(x: 5, y: (contentField.font?.pointSize)! / 2 - 2)
+        placeholderLabel.textColor = .tertiaryLabel
+        placeholderLabel.isHidden = !contentField.text!.isEmpty
+    }
+    
+    func checkForChanges() {
+        guard let titleText = titleField.text, !titleText.isEmpty,
+              let contentText = contentField.text, !contentText.isEmpty else {
+            adaptiveButton.isEnabled = false
+            return
+        }
+        
+        let hasChanged = (originalNoteTitle != titleField.text) || (originalNoteContent != contentField.text)
+        adaptiveButton.isEnabled = hasChanged
+    }
+    
+    @objc func textFieldDidChange(_ textField: UITextField) {
+        checkForChanges()
     }
     
     @objc func hideKeyboard() {
@@ -92,38 +126,25 @@ class DetailsNoteViewController: UIViewController, UITextViewDelegate
             }
         }
         
-        
         delegate?.didAddNote()
         navigationController?.popViewController(animated: true)
     }
-    
-    @IBAction func editButtonClicked(_ sender: Any) {
-        
-    }
 }
 
-// MARK: - UITextFieldDelegate
+// MARK: - UITextFieldDelegate and UITextViewDelegate
 
-extension DetailsNoteViewController: UITextFieldDelegate {
+extension DetailsNoteViewController: UITextFieldDelegate, UITextViewDelegate {
     func textViewDidChange(_ textView: UITextView) {
-        adaptiveButton.isEnabled = true
-        
+        checkForChanges()
+        placeholderLabel?.isHidden = !textView.text.isEmpty
     }
     
     func textViewDidBeginEditing(_ textView: UITextView) {
-        contentField.text = nil
-        contentField.textColor = .label
+        placeholderLabel?.isHidden = !textView.text.isEmpty
     }
     
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        if textField == titleField {
-            contentField.becomeFirstResponder()
-        }
-        return true
+    func textViewDidEndEditing(_ textView: UITextView) {
+        placeholderLabel?.isHidden = !textView.text.isEmpty
     }
-    
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        adaptiveButton.isEnabled = true
-    }
-    
+
 }

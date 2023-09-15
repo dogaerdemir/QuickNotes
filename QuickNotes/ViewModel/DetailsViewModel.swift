@@ -28,7 +28,6 @@ class DetailsViewModel {
         
         do {
             try context.save()
-            print("success")
         } catch {
             print("error")
         }
