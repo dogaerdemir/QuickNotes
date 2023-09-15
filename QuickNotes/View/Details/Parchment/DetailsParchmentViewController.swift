@@ -17,32 +17,21 @@ class DetailsParchmentViewController: UIViewController {
         UIStoryboard(name: "DetailsMapView", bundle: nil).instantiateViewController(withIdentifier: "detailsMapView") as! DetailsMapViewController
     ]
     
-    var chosenNote: Note? {
-        didSet {
-            if let detailsNoteVC = vcs.first as? DetailsNoteViewController {
-                detailsNoteVC.chosenNote = chosenNote
-            }
-        }
-    }
-    
     var currentDarkModeStatus: Bool?
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        setPagingControllers()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationItem.title = "Detay"
         
-        // Triggers only if there is a change in dark mode status
         let newDarkModeStatus = UserDefaults.standard.bool(forKey: "isDarkMode")
         if currentDarkModeStatus != newDarkModeStatus {
-            setPagingControllers()
+            setPagingControllers() // Triggers only if there is a change in dark mode status, so acts like a viewDidLoad practically
             currentDarkModeStatus = newDarkModeStatus
         }
-
     }
     
     private func getPagingOptions() -> PagingOptions {
@@ -91,14 +80,12 @@ class DetailsParchmentViewController: UIViewController {
         pagingViewController.didMove(toParent: self)
     }
     
-    func updateChildViewControllers(withNote note: Note, delegate: NoteDelegate) {
+    func updateChildViewControllers(withNote note: Note?, delegate: NoteDelegate) {
         if let detailsNoteVC = vcs[0] as? DetailsNoteViewController {
             detailsNoteVC.chosenNote = note
             detailsNoteVC.delegate = delegate
         }
     }
-    
-    
 }
 
 extension DetailsParchmentViewController: PagingViewControllerDataSource {

@@ -8,18 +8,12 @@ protocol NoteDelegate: AnyObject {
     func didAddNote()
 }
 
-class MainViewController: UIViewController, NoteDelegate {
+class MainViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var addButton: UIButton!
     var selectAllButton: UIBarButtonItem!
-    
-    var notes: [Note] = []
-    var filteredNotes: [Note] = []
-    var selectedNote: Note?
-    
     let searchController = UISearchController(searchResultsController: nil)
-    
     lazy var dropDown : DropDown = {
         let menu = DropDown()
         let sortTypes = ["Sort By", "Alphabetical (A-Z)", "Alphabetical (Z-A)", "Create Date (Oldest First)", "Create Date (Newest First)", "Edit Date (Oldest First)", "Edit Date (Newest First)"]
@@ -62,7 +56,12 @@ class MainViewController: UIViewController, NoteDelegate {
         return menu
     }()
     
+    var notes: [Note] = []
+    var filteredNotes: [Note] = []
+    var selectedNote: Note?
+    
     var currentSortMethod: String?
+    var currentDarkModeStatus: Bool?
     
     let viewModel = MainViewModel()
     
@@ -74,7 +73,11 @@ class MainViewController: UIViewController, NoteDelegate {
         super.viewWillAppear(animated)
         self.navigationItem.title = "Notes"
         
-        handleDarkModeChange()
+        let newDarkModeStatus = UserDefaults.standard.bool(forKey: "isDarkMode")
+        if currentDarkModeStatus != newDarkModeStatus {
+            handleDarkModeChange() // Triggers only if there is a change in dark mode status
+            currentDarkModeStatus = newDarkModeStatus
+        }
         //self.navigationController?.navigationBar.prefersLargeTitles = true
         //self.tableView.contentOffset = CGPoint(x: 0, y: -self.searchController.searchBar.frame.height)
     }
@@ -186,12 +189,6 @@ class MainViewController: UIViewController, NoteDelegate {
         else { guard authorizationError != nil else { return } }
     }
     
-    func didAddNote() {
-        self.notes = viewModel.fetchNotes()
-        sortNotes(by: currentSortMethod ?? "Alphabetical (A-Z)")
-        self.tableView.reloadData()
-    }
-    
     func updateSelectAllButton() {
         if tableView.indexPathsForSelectedRows?.count == notes.count {
             selectAllButton.title = "Deselect All"
@@ -294,7 +291,11 @@ class MainViewController: UIViewController, NoteDelegate {
     
     @IBAction func addButtonAction(_ sender: Any) {
         selectedNote = nil
-        performSegue(withIdentifier: "toDetailsVC", sender: nil)
+        let storyboard = UIStoryboard(name: "DetailsParchmentView", bundle: nil)
+        if let destination = storyboard.instantiateViewController(withIdentifier: "detailsParchmentView") as? DetailsParchmentViewController {
+            destination.updateChildViewControllers(withNote: nil, delegate: self)
+            navigationController?.pushViewController(destination, animated: true)
+        }
     }
 }
 
@@ -318,11 +319,11 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if !tableView.isEditing {
             selectedNote = notes[indexPath.row]
-            
             let storyboard = UIStoryboard(name: "DetailsParchmentView", bundle: nil)
             if let destination = storyboard.instantiateViewController(withIdentifier: "detailsParchmentView") as? DetailsParchmentViewController {
                 destination.updateChildViewControllers(withNote: selectedNote!, delegate: self)
                 navigationController?.pushViewController(destination, animated: true)
+                tableView.deselectRow(at: indexPath, animated: true)
             }
         } else {
             updateSelectAllButton()
@@ -330,7 +331,9 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-        updateSelectAllButton()
+        if tableView.isEditing {
+            updateSelectAllButton()
+        }
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
@@ -353,6 +356,8 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
+// MARK: - UISearchResultUpdating
+
 extension MainViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         if let text = searchController.searchBar.text, !text.isEmpty {
@@ -369,5 +374,15 @@ extension MainViewController: UISearchResultsUpdating {
             filteredNotes = notes
         }
         tableView.reloadData()
+    }
+}
+
+// MARK: - NoteDelegateProtocol
+
+extension MainViewController: NoteDelegate {
+    func didAddNote() {
+        self.notes = viewModel.fetchNotes()
+        sortNotes(by: currentSortMethod ?? "Alphabetical (A-Z)")
+        self.tableView.reloadData()
     }
 }

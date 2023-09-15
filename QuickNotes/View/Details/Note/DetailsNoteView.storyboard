@@ -77,9 +77,9 @@
                     </view>
                     <navigationItem key="navigationItem" title="Detail" id="S9g-yl-UFN"/>
                     <connections>
+                        <outlet property="contentField" destination="cza-xM-qI9" id="Yos-Js-BH1"/>
                         <outlet property="editButton" destination="dlD-3z-IEi" id="7PJ-La-FC4"/>
                         <outlet property="saveButton" destination="y4m-GH-fin" id="Ebx-0O-CSS"/>
-                        <outlet property="textField" destination="cza-xM-qI9" id="Ipk-Aa-dnu"/>
                         <outlet property="titleField" destination="S3w-xD-EoG" id="YL9-1q-lix"/>
                     </connections>
                 </viewController>
