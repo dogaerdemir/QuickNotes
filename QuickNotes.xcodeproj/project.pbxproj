@@ -115,13 +115,6 @@
 			path = MainTableViewCell;
 			sourceTree = "<group>";
 		};
-		DA12EC752AAE1CF500C00E9B /* Manager */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Manager;
-			sourceTree = "<group>";
-		};
 		DA631BB227EDB84F0013867C = {
 			isa = PBXGroup;
 			children = (
@@ -141,7 +134,6 @@
 		DA631BBD27EDB84F0013867C /* QuickNotes */ = {
 			isa = PBXGroup;
 			children = (
-				DA12EC752AAE1CF500C00E9B /* Manager */,
 				DA053ADF2AACBDC100D24484 /* Extensions */,
 				DA053ADB2AACBBDF00D24484 /* Model */,
 				DA053AE22AACBE8600D24484 /* View */,
