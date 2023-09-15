@@ -18,11 +18,18 @@
 		DA631BBF27EDB84F0013867C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA631BBE27EDB84F0013867C /* AppDelegate.swift */; };
 		DA631BC127EDB84F0013867C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA631BC027EDB84F0013867C /* SceneDelegate.swift */; };
 		DA631BC327EDB84F0013867C /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA631BC227EDB84F0013867C /* MainViewController.swift */; };
-		DA631BC627EDB84F0013867C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA631BC427EDB84F0013867C /* Main.storyboard */; };
 		DA631BC927EDB84F0013867C /* QuickNotes.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = DA631BC727EDB84F0013867C /* QuickNotes.xcdatamodeld */; };
 		DA631BCB27EDB8510013867C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA631BCA27EDB8510013867C /* Assets.xcassets */; };
 		DA631BCE27EDB8510013867C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA631BCC27EDB8510013867C /* LaunchScreen.storyboard */; };
-		DA631BD627EDBBCC0013867C /* DetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA631BD527EDBBCC0013867C /* DetailsViewController.swift */; };
+		DA631BD627EDBBCC0013867C /* DetailsNoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA631BD527EDBBCC0013867C /* DetailsNoteViewController.swift */; };
+		DA743D112AB3B4B400360653 /* MainView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA743D102AB3B4B400360653 /* MainView.storyboard */; };
+		DA743D132AB3B4BC00360653 /* DetailsNoteView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA743D122AB3B4BC00360653 /* DetailsNoteView.storyboard */; };
+		DA743D152AB3B4C700360653 /* SettingsView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA743D142AB3B4C700360653 /* SettingsView.storyboard */; };
+		DA743D1B2AB3B88600360653 /* DetailsParchmentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA743D1A2AB3B88600360653 /* DetailsParchmentViewController.swift */; };
+		DA743D1D2AB3B89C00360653 /* DetailsParchmentView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA743D1C2AB3B89C00360653 /* DetailsParchmentView.storyboard */; };
+		DA743D202AB3B90600360653 /* DetailsMapView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA743D1F2AB3B90600360653 /* DetailsMapView.storyboard */; };
+		DA743D232AB3B92600360653 /* DetailsMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA743D222AB3B92600360653 /* DetailsMapViewController.swift */; };
+		DA743D262AB3B97100360653 /* Parchment in Frameworks */ = {isa = PBXBuildFile; productRef = DA743D252AB3B97100360653 /* Parchment */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,12 +44,18 @@
 		DA631BBE27EDB84F0013867C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DA631BC027EDB84F0013867C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		DA631BC227EDB84F0013867C /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
-		DA631BC527EDB84F0013867C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		DA631BC827EDB84F0013867C /* QuickNotes.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = QuickNotes.xcdatamodel; sourceTree = "<group>"; };
 		DA631BCA27EDB8510013867C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DA631BCD27EDB8510013867C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DA631BCF27EDB8510013867C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		DA631BD527EDBBCC0013867C /* DetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsViewController.swift; sourceTree = "<group>"; };
+		DA631BD527EDBBCC0013867C /* DetailsNoteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsNoteViewController.swift; sourceTree = "<group>"; };
+		DA743D102AB3B4B400360653 /* MainView.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MainView.storyboard; sourceTree = "<group>"; };
+		DA743D122AB3B4BC00360653 /* DetailsNoteView.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = DetailsNoteView.storyboard; sourceTree = "<group>"; };
+		DA743D142AB3B4C700360653 /* SettingsView.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = SettingsView.storyboard; sourceTree = "<group>"; };
+		DA743D1A2AB3B88600360653 /* DetailsParchmentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsParchmentViewController.swift; sourceTree = "<group>"; };
+		DA743D1C2AB3B89C00360653 /* DetailsParchmentView.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = DetailsParchmentView.storyboard; sourceTree = "<group>"; };
+		DA743D1F2AB3B90600360653 /* DetailsMapView.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = DetailsMapView.storyboard; sourceTree = "<group>"; };
+		DA743D222AB3B92600360653 /* DetailsMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsMapViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,6 +64,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DA12EC742AADF92100C00E9B /* DropDown in Frameworks */,
+				DA743D262AB3B97100360653 /* Parchment in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -85,10 +99,9 @@
 		DA053AE22AACBE8600D24484 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				DA12EC6D2AADDC5B00C00E9B /* MainTableViewCell */,
-				DA631BC227EDB84F0013867C /* MainViewController.swift */,
-				DA631BD527EDBBCC0013867C /* DetailsViewController.swift */,
-				DA1EC83C2AAD329000515772 /* SettingsViewController.swift */,
+				DA743D162AB3B72200360653 /* Main */,
+				DA743D172AB3B72A00360653 /* Details */,
+				DA743D182AB3B72F00360653 /* Settings */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -100,13 +113,6 @@
 				DA12EC6F2AADDC7500C00E9B /* MainTableViewCell.xib */,
 			);
 			path = MainTableViewCell;
-			sourceTree = "<group>";
-		};
-		DA12EC752AAE1CF500C00E9B /* Manager */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Manager;
 			sourceTree = "<group>";
 		};
 		DA631BB227EDB84F0013867C = {
@@ -128,20 +134,74 @@
 		DA631BBD27EDB84F0013867C /* QuickNotes */ = {
 			isa = PBXGroup;
 			children = (
-				DA12EC752AAE1CF500C00E9B /* Manager */,
 				DA053ADF2AACBDC100D24484 /* Extensions */,
 				DA053ADB2AACBBDF00D24484 /* Model */,
 				DA053AE22AACBE8600D24484 /* View */,
 				DA053ADC2AACBC0100D24484 /* ViewModel */,
 				DA631BBE27EDB84F0013867C /* AppDelegate.swift */,
 				DA631BC027EDB84F0013867C /* SceneDelegate.swift */,
-				DA631BC427EDB84F0013867C /* Main.storyboard */,
 				DA631BCA27EDB8510013867C /* Assets.xcassets */,
 				DA631BCC27EDB8510013867C /* LaunchScreen.storyboard */,
 				DA631BCF27EDB8510013867C /* Info.plist */,
 				DA631BC727EDB84F0013867C /* QuickNotes.xcdatamodeld */,
 			);
 			path = QuickNotes;
+			sourceTree = "<group>";
+		};
+		DA743D162AB3B72200360653 /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				DA12EC6D2AADDC5B00C00E9B /* MainTableViewCell */,
+				DA631BC227EDB84F0013867C /* MainViewController.swift */,
+				DA743D102AB3B4B400360653 /* MainView.storyboard */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
+		DA743D172AB3B72A00360653 /* Details */ = {
+			isa = PBXGroup;
+			children = (
+				DA743D192AB3B86D00360653 /* Parchment */,
+				DA743D1E2AB3B8A000360653 /* Note */,
+				DA743D212AB3B90B00360653 /* Map */,
+			);
+			path = Details;
+			sourceTree = "<group>";
+		};
+		DA743D182AB3B72F00360653 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				DA1EC83C2AAD329000515772 /* SettingsViewController.swift */,
+				DA743D142AB3B4C700360653 /* SettingsView.storyboard */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		DA743D192AB3B86D00360653 /* Parchment */ = {
+			isa = PBXGroup;
+			children = (
+				DA743D1A2AB3B88600360653 /* DetailsParchmentViewController.swift */,
+				DA743D1C2AB3B89C00360653 /* DetailsParchmentView.storyboard */,
+			);
+			path = Parchment;
+			sourceTree = "<group>";
+		};
+		DA743D1E2AB3B8A000360653 /* Note */ = {
+			isa = PBXGroup;
+			children = (
+				DA631BD527EDBBCC0013867C /* DetailsNoteViewController.swift */,
+				DA743D122AB3B4BC00360653 /* DetailsNoteView.storyboard */,
+			);
+			path = Note;
+			sourceTree = "<group>";
+		};
+		DA743D212AB3B90B00360653 /* Map */ = {
+			isa = PBXGroup;
+			children = (
+				DA743D222AB3B92600360653 /* DetailsMapViewController.swift */,
+				DA743D1F2AB3B90600360653 /* DetailsMapView.storyboard */,
+			);
+			path = Map;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -162,6 +222,7 @@
 			name = QuickNotes;
 			packageProductDependencies = (
 				DA12EC732AADF92100C00E9B /* DropDown */,
+				DA743D252AB3B97100360653 /* Parchment */,
 			);
 			productName = QuickNotes;
 			productReference = DA631BBB27EDB84F0013867C /* QuickNotes.app */;
@@ -193,6 +254,7 @@
 			mainGroup = DA631BB227EDB84F0013867C;
 			packageReferences = (
 				DA12EC722AADF92100C00E9B /* XCRemoteSwiftPackageReference "DropDown" */,
+				DA743D242AB3B97100360653 /* XCRemoteSwiftPackageReference "Parchment" */,
 			);
 			productRefGroup = DA631BBC27EDB84F0013867C /* Products */;
 			projectDirPath = "";
@@ -210,8 +272,12 @@
 			files = (
 				DA631BCE27EDB8510013867C /* LaunchScreen.storyboard in Resources */,
 				DA631BCB27EDB8510013867C /* Assets.xcassets in Resources */,
+				DA743D1D2AB3B89C00360653 /* DetailsParchmentView.storyboard in Resources */,
+				DA743D112AB3B4B400360653 /* MainView.storyboard in Resources */,
 				DA12EC712AADDC7500C00E9B /* MainTableViewCell.xib in Resources */,
-				DA631BC627EDB84F0013867C /* Main.storyboard in Resources */,
+				DA743D132AB3B4BC00360653 /* DetailsNoteView.storyboard in Resources */,
+				DA743D152AB3B4C700360653 /* SettingsView.storyboard in Resources */,
+				DA743D202AB3B90600360653 /* DetailsMapView.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -224,14 +290,16 @@
 			files = (
 				DA12EC702AADDC7500C00E9B /* MainTableViewCell.swift in Sources */,
 				DA053ADE2AACBC1500D24484 /* MainViewModel.swift in Sources */,
+				DA743D1B2AB3B88600360653 /* DetailsParchmentViewController.swift in Sources */,
 				DA631BC327EDB84F0013867C /* MainViewController.swift in Sources */,
 				DA053AE12AACBDEC00D24484 /* UIViewController + Extension.swift in Sources */,
+				DA743D232AB3B92600360653 /* DetailsMapViewController.swift in Sources */,
 				DA1EC83D2AAD329000515772 /* SettingsViewController.swift in Sources */,
 				DA631BC927EDB84F0013867C /* QuickNotes.xcdatamodeld in Sources */,
 				DA631BBF27EDB84F0013867C /* AppDelegate.swift in Sources */,
 				DA053ADA2AACBBDA00D24484 /* Note.swift in Sources */,
 				DA631BC127EDB84F0013867C /* SceneDelegate.swift in Sources */,
-				DA631BD627EDBBCC0013867C /* DetailsViewController.swift in Sources */,
+				DA631BD627EDBBCC0013867C /* DetailsNoteViewController.swift in Sources */,
 				DA1EC83B2AACD8D700515772 /* DetailsViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -239,14 +307,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		DA631BC427EDB84F0013867C /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				DA631BC527EDB84F0013867C /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		DA631BCC27EDB8510013867C /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -384,7 +444,6 @@
 				INFOPLIST_FILE = QuickNotes/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -412,7 +471,6 @@
 				INFOPLIST_FILE = QuickNotes/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -460,6 +518,14 @@
 				kind = branch;
 			};
 		};
+		DA743D242AB3B97100360653 /* XCRemoteSwiftPackageReference "Parchment" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/rechsteiner/Parchment";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -467,6 +533,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = DA12EC722AADF92100C00E9B /* XCRemoteSwiftPackageReference "DropDown" */;
 			productName = DropDown;
+		};
+		DA743D252AB3B97100360653 /* Parchment */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DA743D242AB3B97100360653 /* XCRemoteSwiftPackageReference "Parchment" */;
+			productName = Parchment;
 		};
 /* End XCSwiftPackageProductDependency section */
 

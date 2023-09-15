@@ -8,18 +8,12 @@ protocol NoteDelegate: AnyObject {
     func didAddNote()
 }
 
-class MainViewController: UIViewController, NoteDelegate {
+class MainViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var addButton: UIButton!
     var selectAllButton: UIBarButtonItem!
-    
-    var notes: [Note] = []
-    var filteredNotes: [Note] = []
-    var selectedNote: Note?
-    
     let searchController = UISearchController(searchResultsController: nil)
-    
     lazy var dropDown : DropDown = {
         let menu = DropDown()
         let sortTypes = ["Sort By", "Alphabetical (A-Z)", "Alphabetical (Z-A)", "Create Date (Oldest First)", "Create Date (Newest First)", "Edit Date (Oldest First)", "Edit Date (Newest First)"]
@@ -47,7 +41,7 @@ class MainViewController: UIViewController, NoteDelegate {
             }
         }
         
-        menu.width = 220
+        menu.width = 225
         
         let isDarkMode = UserDefaults.standard.bool(forKey: "isDarkMode")
         
@@ -57,13 +51,17 @@ class MainViewController: UIViewController, NoteDelegate {
         } else {
             menu.backgroundColor = .white
             menu.textColor = .black
-            
         }
         
         return menu
     }()
     
+    var notes: [Note] = []
+    var filteredNotes: [Note] = []
+    var selectedNote: Note?
+    
     var currentSortMethod: String?
+    var currentDarkModeStatus: Bool?
     
     let viewModel = MainViewModel()
     
@@ -75,10 +73,19 @@ class MainViewController: UIViewController, NoteDelegate {
         super.viewWillAppear(animated)
         self.navigationItem.title = "Notes"
         
-        handleDarkModeChange()
+        let newDarkModeStatus = UserDefaults.standard.bool(forKey: "isDarkMode")
+        if currentDarkModeStatus != newDarkModeStatus {
+            handleDarkModeChange() // Triggers only if there is a change in dark mode status
+            currentDarkModeStatus = newDarkModeStatus
+        }
+        navigationItem.hidesSearchBarWhenScrolling = false
         //self.navigationController?.navigationBar.prefersLargeTitles = true
-        //self.tableView.contentOffset = CGPoint(x: 0, y: -self.searchController.searchBar.frame.height)
     }
+    
+    /*override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        navigationItem.hidesSearchBarWhenScrolling = true
+    }*/
     
     func setupViews() {
         tableView.register(UINib(nibName: "MainTableViewCell", bundle: nil), forCellReuseIdentifier: "mainTableViewCell")
@@ -108,13 +115,15 @@ class MainViewController: UIViewController, NoteDelegate {
         
         dropDown.anchorView = sortButton
         
-        let isLockedApp = UserDefaults.standard.bool(forKey: "isLockedApp")
-        if isLockedApp {
-            authenticate()
+        if let appLocking = UserDefaults.standard.value(forKey: "isLockedApp") as? Bool {
+            if appLocking {
+                authenticate()
+            } else {
+                self.getData()
+                sortNotes(by: currentSortMethod ?? "Alphabetical (A-Z)")
+            }
         } else {
             self.getData()
-            
-            sortNotes(by: currentSortMethod ?? "Alphabetical (A-Z)")
         }
         
         if let tabBar = self.tabBarController?.tabBar {
@@ -133,6 +142,7 @@ class MainViewController: UIViewController, NoteDelegate {
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.placeholder = "Search in Notes"
         navigationItem.searchController = searchController
+        
     }
     
     @objc func showDropDown() {
@@ -176,7 +186,7 @@ class MainViewController: UIViewController, NoteDelegate {
             localAuthenticationContext.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: reason) { success, evaluateError in
                 if success {
                     DispatchQueue.main.async() {
-                        self.showToast(message: "Success", duration: 1.5)
+                        self.showToast(message: "Success", duration: .short)
                         self.getData()
                         self.sortNotes(by: self.currentSortMethod ?? "Alphabetical (A-Z)")
                     }
@@ -185,12 +195,6 @@ class MainViewController: UIViewController, NoteDelegate {
             }
         }
         else { guard authorizationError != nil else { return } }
-    }
-    
-    func didAddNote() {
-        self.notes = viewModel.fetchNotes()
-        sortNotes(by: currentSortMethod ?? "Alphabetical (A-Z)")
-        self.tableView.reloadData()
     }
     
     func updateSelectAllButton() {
@@ -284,6 +288,7 @@ class MainViewController: UIViewController, NoteDelegate {
     @objc func handleDarkModeChange() {
         let isDarkMode = UserDefaults.standard.bool(forKey: "isDarkMode")
         view.overrideUserInterfaceStyle = isDarkMode ? .dark : .light
+        self.tabBarController?.overrideUserInterfaceStyle = isDarkMode ? .dark : .light
         updateDropDownAppearance()
     }
     
@@ -294,19 +299,16 @@ class MainViewController: UIViewController, NoteDelegate {
     
     @IBAction func addButtonAction(_ sender: Any) {
         selectedNote = nil
-        performSegue(withIdentifier: "toDetailsVC", sender: nil)
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "toDetailsVC" {
-            let destinationVC = segue.destination as! DetailsViewController
-            destinationVC.chosenNote = selectedNote
-            destinationVC.delegate = self
+        let storyboard = UIStoryboard(name: "DetailsParchmentView", bundle: nil)
+        if let destination = storyboard.instantiateViewController(withIdentifier: "detailsParchmentView") as? DetailsParchmentViewController {
+            destination.updateChildViewControllers(withNote: nil, delegate: self)
+            navigationController?.pushViewController(destination, animated: true)
         }
     }
 }
 
 // MARK: - UITableViewDelegate and UITableViewDataSource
+
 extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return isFiltering() ? filteredNotes.count : notes.count
@@ -325,14 +327,21 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if !tableView.isEditing {
             selectedNote = notes[indexPath.row]
-            performSegue(withIdentifier: "toDetailsVC", sender: nil)
+            let storyboard = UIStoryboard(name: "DetailsParchmentView", bundle: nil)
+            if let destination = storyboard.instantiateViewController(withIdentifier: "detailsParchmentView") as? DetailsParchmentViewController {
+                destination.updateChildViewControllers(withNote: selectedNote!, delegate: self)
+                navigationController?.pushViewController(destination, animated: true)
+                tableView.deselectRow(at: indexPath, animated: true)
+            }
         } else {
             updateSelectAllButton()
         }
     }
     
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-        updateSelectAllButton()
+        if tableView.isEditing {
+            updateSelectAllButton()
+        }
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
@@ -355,21 +364,29 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
+// MARK: - UISearchResultUpdating
+
 extension MainViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         if let text = searchController.searchBar.text, !text.isEmpty {
-            print("Search Text: \(text)")
             filteredNotes = notes.filter { note in
                 let isTitleMatching = note.title.localizedCaseInsensitiveContains(text)
                 let isContentMatching = note.content.localizedCaseInsensitiveContains(text)
-                print("Note Title: \(note.title), isTitleMatching: \(isTitleMatching)")
-                print("Note Content: \(note.content), isContentMatching: \(isContentMatching)")
                 return isTitleMatching || isContentMatching
             }
-            print("Filtered Notes: \(filteredNotes)")
         } else {
             filteredNotes = notes
         }
         tableView.reloadData()
+    }
+}
+
+// MARK: - NoteDelegateProtocol
+
+extension MainViewController: NoteDelegate {
+    func didAddNote() {
+        self.notes = viewModel.fetchNotes()
+        sortNotes(by: currentSortMethod ?? "Alphabetical (A-Z)")
+        self.tableView.reloadData()
     }
 }
