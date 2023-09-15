@@ -5,11 +5,11 @@ class DetailsNoteViewController: UIViewController, UITextViewDelegate
 {
     @IBOutlet weak var titleField: UITextField!
     @IBOutlet weak var contentField: UITextView!
-    @IBOutlet weak var saveButton: UIButton!
-    @IBOutlet weak var editButton: UIButton!
+    @IBOutlet weak var adaptiveButton: UIButton!
     
     var viewModel: DetailsViewModel?
-    var chosenNote : Note?
+    var chosenNote: Note?
+    var isNewMode: Bool?
     weak var delegate: NoteDelegate?
     
     override func viewDidLoad() {
@@ -42,16 +42,22 @@ class DetailsNoteViewController: UIViewController, UITextViewDelegate
         titleField.delegate = self
         contentField.delegate = self
         
+        
+        
         if let note = chosenNote {
-            saveButton.isHidden = true
-            editButton.isHidden = false
-            editButton.isEnabled = false
+            adaptiveButton.setTitle("Edit", for: .normal)
             titleField.text = note.title
             contentField.text = note.content
+            isNewMode = false
         } else {
-            saveButton.isHidden = false
-            editButton.isHidden = true
-            editButton.isEnabled = true
+            adaptiveButton.setTitle("Save", for: .normal)
+            let placeholderAttributes: [NSAttributedString.Key : Any] = [
+                .font: UIFont.boldSystemFont(ofSize: 19),
+                .foregroundColor: UIColor.lightGray
+            ]
+            
+            contentField.attributedText = NSAttributedString(string: "Note", attributes: placeholderAttributes)
+            isNewMode = true
         }
         
         let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
@@ -75,18 +81,24 @@ class DetailsNoteViewController: UIViewController, UITextViewDelegate
         view.endEditing(true)
     }
     
-    @IBAction func saveButtonClicked(_ sender: Any) {
-        viewModel?.saveNewNote(title: titleField.text!, note: contentField.text!)
+    @IBAction func buttonClicked(_ sender: Any) {
+        if let mode = isNewMode {
+            if mode {
+                viewModel?.saveNewNote(title: titleField.text!, note: contentField.text!)
+            } else {
+                if let id = chosenNote?.id, let text = contentField.text, let title = titleField.text {
+                    viewModel?.updateExistingNote(id: id, updatedTitle: title, updatedNote: text)
+                }
+            }
+        }
+        
+        
         delegate?.didAddNote()
         navigationController?.popViewController(animated: true)
     }
     
     @IBAction func editButtonClicked(_ sender: Any) {
-        if let id = chosenNote?.id, let text = contentField.text, let title = titleField.text {
-            viewModel?.updateExistingNote(id: id, updatedTitle: title, updatedNote: text)
-            delegate?.didAddNote()
-            navigationController?.popViewController(animated: true)
-        }
+        
     }
 }
 
@@ -94,7 +106,13 @@ class DetailsNoteViewController: UIViewController, UITextViewDelegate
 
 extension DetailsNoteViewController: UITextFieldDelegate {
     func textViewDidChange(_ textView: UITextView) {
-        editButton.isEnabled = true
+        adaptiveButton.isEnabled = true
+        
+    }
+    
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        contentField.text = nil
+        contentField.textColor = .label
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -105,8 +123,7 @@ extension DetailsNoteViewController: UITextFieldDelegate {
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        editButton.isEnabled = true
+        adaptiveButton.isEnabled = true
     }
-    
     
 }
