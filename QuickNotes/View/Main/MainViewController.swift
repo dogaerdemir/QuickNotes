@@ -115,13 +115,15 @@ class MainViewController: UIViewController {
         
         dropDown.anchorView = sortButton
         
-        let isLockedApp = UserDefaults.standard.bool(forKey: "isLockedApp")
-        if isLockedApp {
-            authenticate()
+        if let appLocking = UserDefaults.standard.value(forKey: "isLockedApp") as? Bool {
+            if appLocking {
+                authenticate()
+            } else {
+                self.getData()
+                sortNotes(by: currentSortMethod ?? "Alphabetical (A-Z)")
+            }
         } else {
             self.getData()
-            
-            sortNotes(by: currentSortMethod ?? "Alphabetical (A-Z)")
         }
         
         if let tabBar = self.tabBarController?.tabBar {
