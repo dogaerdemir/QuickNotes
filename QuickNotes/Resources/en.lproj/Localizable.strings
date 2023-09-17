@@ -6,6 +6,9 @@
   
 */
 
+"en" = "English";
+"tr" = "Turkish";
+
 "tab_notes" = "Notes";
 
 "tab_settings" = "Settings";

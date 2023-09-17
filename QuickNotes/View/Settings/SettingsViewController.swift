@@ -11,7 +11,6 @@ import Localize_Swift
 class SettingsViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
-    var actionSheet: UIAlertController!
     var lightDarkSwitch = UISwitch()
     var biometricSwitch = UISwitch()
     var languageButton: UIButton = {
@@ -22,7 +21,7 @@ class SettingsViewController: UIViewController {
         return button
     }()
     let userDefaults = UserDefaults.standard
-    let availableLanguages = Localize.availableLanguages()
+    let availableLanguages = Localize.availableLanguages(true)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,13 +31,12 @@ class SettingsViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationItem.title = "tab_settings".localized()
-        
-        let isDarkMode = UserDefaults.standard.bool(forKey: "isDarkMode")
-        self.view.overrideUserInterfaceStyle = isDarkMode ? .dark : .light
-        self.tabBarController?.overrideUserInterfaceStyle = isDarkMode ? .dark : .light
     }
     
     func setupViews() {
+        
+        handleDarkModeChange()
+    
         if let userInterfaceStyle = UserDefaults.standard.value(forKey: "isDarkMode") as? Bool {
             lightDarkSwitch.isOn = userInterfaceStyle ? true : false
         }
@@ -46,19 +44,14 @@ class SettingsViewController: UIViewController {
         if let appLocking = UserDefaults.standard.value(forKey: "isLockedApp") as? Bool {
             biometricSwitch.isOn = appLocking ? true : false
         }
-        
-        if let language = UserDefaults.standard.value(forKey: "language") as? String {
-            languageButton.setTitle("\(language) ↓", for: .normal)
-        } else {
-            languageButton.setTitle("tab_settings_language_button".localized(), for: .normal)
-        }
-        
-        view.addSubview(tableView)
+
+        languageButton.setTitle("\(Localize.currentLanguage().localized()) ↓", for: .normal)
         
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         tableView.delegate = self
         tableView.dataSource = self
         tableView.frame = view.bounds
+        view.addSubview(tableView)
         
         lightDarkSwitch.addTarget(self, action: #selector(lightDarkSwitchChanged), for: .valueChanged)
         biometricSwitch.addTarget(self, action: #selector(biometricSwitchChanged), for: .valueChanged)
@@ -81,20 +74,17 @@ class SettingsViewController: UIViewController {
     }
     
     @objc func doChangeLanguage() {
-        actionSheet = UIAlertController(title: nil, message: "alert_change_language".localized(), preferredStyle: UIAlertController.Style.actionSheet)
+        let actionSheet = UIAlertController(title: nil, message: "alert_change_language".localized(), preferredStyle: UIAlertController.Style.actionSheet)
+        let isDarkMode = UserDefaults.standard.bool(forKey: "isDarkMode")
+        actionSheet.overrideUserInterfaceStyle = isDarkMode ? .dark : .light
         for language in availableLanguages {
-            if language != "Base" {
-                print("LANGUAGE ", language)
-                let displayName = Localize.displayNameForLanguage(language)
-                print("DISPLAYNAME ", displayName)
-                let languageAction = UIAlertAction(title: displayName, style: .default, handler: {
-                    (alert: UIAlertAction!) -> Void in
-                    Localize.setCurrentLanguage(language)
-                    self.languageButton.setTitle("\(displayName) ↓", for: .normal)
-                    UserDefaults.standard.set(displayName, forKey: "language")
-                })
-                actionSheet.addAction(languageAction)
-            }
+            let displayName = Localize.displayNameForLanguage(language)
+            let languageAction = UIAlertAction(title: displayName, style: .default, handler: {
+                (alert: UIAlertAction!) -> Void in
+                Localize.setCurrentLanguage(language)
+                UserDefaults.standard.set(Localize.currentLanguage(), forKey: "language")
+            })
+            actionSheet.addAction(languageAction)
         }
         let cancelAction = UIAlertAction(title: "alert_cancel".localized(), style: UIAlertAction.Style.cancel, handler: {
             (alert: UIAlertAction) -> Void in

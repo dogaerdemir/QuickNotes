@@ -6,6 +6,9 @@
   
 */
 
+"en" = "İngilizce";
+"tr" = "Türkçe";
+
 "tab_notes" = "Notlar";
 
 "tab_settings" = "Ayarlar";
