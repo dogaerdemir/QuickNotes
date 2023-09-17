@@ -1,0 +1,22 @@
+/* 
+  Localizable.strings
+  QuickNotes
+
+  Created by Doğa Erdemir on 16.09.2023.
+  
+*/
+
+"tab_notes" = "Notes";
+
+"tab_settings" = "Settings";
+"tab_settings_dark_mode" = "Dark Mode";
+"tab_settings_lock_app" = "Lock App";
+"tab_settings_language" = "Set Language";
+"tab_settings_section_appearance" = "Appearance";
+"tab_settings_section_security" = "Security";
+"tab_settings_section_language" = "Language";
+"tab_settings_language_button" = "Choose";
+
+"alert_change_language" = "Change Language \nRestart is required for changes to take effect";
+"alert_cancel" = "Cancel";
+"alert_okay" = "Okay";
