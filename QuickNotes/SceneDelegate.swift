@@ -1,4 +1,5 @@
 import UIKit
+import Localize_Swift
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -20,13 +21,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let firstStoryboard = UIStoryboard(name: "MainView", bundle: nil)
         let firstVC = firstStoryboard.instantiateInitialViewController()!
         let firstNav = UINavigationController(rootViewController: firstVC)
-        firstNav.tabBarItem = UITabBarItem(title: "Notes", image: UIImage(systemName: "list.clipboard"), selectedImage: UIImage(systemName: "list.clipboard.fill"))
+        firstNav.tabBarItem = UITabBarItem(title: "tab_notes".localized(), image: UIImage(systemName: "list.clipboard"), selectedImage: UIImage(systemName: "list.clipboard.fill"))
         
         // İkinci Tab için
         let secondStoryboard = UIStoryboard(name: "SettingsView", bundle: nil)
         let secondVC = secondStoryboard.instantiateInitialViewController()!
         let secondNav = UINavigationController(rootViewController: secondVC)
-        secondNav.tabBarItem = UITabBarItem(title: "Settings", image: UIImage(systemName: "gearshape"), selectedImage: UIImage(systemName: "gearshape.fill"))
+        secondNav.tabBarItem = UITabBarItem(title: "tab_settings".localized(), image: UIImage(systemName: "gearshape"), selectedImage: UIImage(systemName: "gearshape.fill"))
         
         
         tabBarController.viewControllers = [firstNav, secondNav]

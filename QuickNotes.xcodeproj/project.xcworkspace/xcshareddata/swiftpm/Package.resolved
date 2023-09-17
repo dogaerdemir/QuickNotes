@@ -10,6 +10,15 @@
       }
     },
     {
+      "identity" : "localize-swift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/marmelroy/Localize-Swift.git",
+      "state" : {
+        "branch" : "master",
+        "revision" : "0aa221fed0512772eaad04171d966b8d77b15212"
+      }
+    },
+    {
       "identity" : "parchment",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/rechsteiner/Parchment",

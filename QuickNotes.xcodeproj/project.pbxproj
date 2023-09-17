@@ -30,6 +30,8 @@
 		DA743D202AB3B90600360653 /* DetailsMapView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA743D1F2AB3B90600360653 /* DetailsMapView.storyboard */; };
 		DA743D232AB3B92600360653 /* DetailsMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA743D222AB3B92600360653 /* DetailsMapViewController.swift */; };
 		DA743D262AB3B97100360653 /* Parchment in Frameworks */ = {isa = PBXBuildFile; productRef = DA743D252AB3B97100360653 /* Parchment */; };
+		DAA9ABC42AB5E0FA00727E5C /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = DAA9ABC62AB5E0FA00727E5C /* Localizable.strings */; };
+		DAA9ABCA2AB5E12700727E5C /* Localize_Swift in Frameworks */ = {isa = PBXBuildFile; productRef = DAA9ABC92AB5E12700727E5C /* Localize_Swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -56,6 +58,9 @@
 		DA743D1C2AB3B89C00360653 /* DetailsParchmentView.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = DetailsParchmentView.storyboard; sourceTree = "<group>"; };
 		DA743D1F2AB3B90600360653 /* DetailsMapView.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = DetailsMapView.storyboard; sourceTree = "<group>"; };
 		DA743D222AB3B92600360653 /* DetailsMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsMapViewController.swift; sourceTree = "<group>"; };
+		DAA9ABC12AB5E0E900727E5C /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		DAA9ABC52AB5E0FA00727E5C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		DAA9ABC72AB5E0FD00727E5C /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/Localizable.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +68,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DAA9ABCA2AB5E12700727E5C /* Localize_Swift in Frameworks */,
 				DA12EC742AADF92100C00E9B /* DropDown in Frameworks */,
 				DA743D262AB3B97100360653 /* Parchment in Frameworks */,
 			);
@@ -134,6 +140,7 @@
 		DA631BBD27EDB84F0013867C /* QuickNotes */ = {
 			isa = PBXGroup;
 			children = (
+				DAA9ABC02AB5E0C600727E5C /* Resources */,
 				DA053ADF2AACBDC100D24484 /* Extensions */,
 				DA053ADB2AACBBDF00D24484 /* Model */,
 				DA053AE22AACBE8600D24484 /* View */,
@@ -204,6 +211,14 @@
 			path = Map;
 			sourceTree = "<group>";
 		};
+		DAA9ABC02AB5E0C600727E5C /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				DAA9ABC62AB5E0FA00727E5C /* Localizable.strings */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -223,6 +238,7 @@
 			packageProductDependencies = (
 				DA12EC732AADF92100C00E9B /* DropDown */,
 				DA743D252AB3B97100360653 /* Parchment */,
+				DAA9ABC92AB5E12700727E5C /* Localize_Swift */,
 			);
 			productName = QuickNotes;
 			productReference = DA631BBB27EDB84F0013867C /* QuickNotes.app */;
@@ -250,11 +266,13 @@
 			knownRegions = (
 				en,
 				Base,
+				tr,
 			);
 			mainGroup = DA631BB227EDB84F0013867C;
 			packageReferences = (
 				DA12EC722AADF92100C00E9B /* XCRemoteSwiftPackageReference "DropDown" */,
 				DA743D242AB3B97100360653 /* XCRemoteSwiftPackageReference "Parchment" */,
+				DAA9ABC82AB5E12700727E5C /* XCRemoteSwiftPackageReference "Localize-Swift" */,
 			);
 			productRefGroup = DA631BBC27EDB84F0013867C /* Products */;
 			projectDirPath = "";
@@ -274,6 +292,7 @@
 				DA631BCB27EDB8510013867C /* Assets.xcassets in Resources */,
 				DA743D1D2AB3B89C00360653 /* DetailsParchmentView.storyboard in Resources */,
 				DA743D112AB3B4B400360653 /* MainView.storyboard in Resources */,
+				DAA9ABC42AB5E0FA00727E5C /* Localizable.strings in Resources */,
 				DA12EC712AADDC7500C00E9B /* MainTableViewCell.xib in Resources */,
 				DA743D132AB3B4BC00360653 /* DetailsNoteView.storyboard in Resources */,
 				DA743D152AB3B4C700360653 /* SettingsView.storyboard in Resources */,
@@ -311,8 +330,18 @@
 			isa = PBXVariantGroup;
 			children = (
 				DA631BCD27EDB8510013867C /* Base */,
+				DAA9ABC12AB5E0E900727E5C /* tr */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		DAA9ABC62AB5E0FA00727E5C /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DAA9ABC52AB5E0FA00727E5C /* en */,
+				DAA9ABC72AB5E0FD00727E5C /* tr */,
+			);
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -322,6 +351,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
@@ -382,6 +412,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
@@ -526,6 +557,14 @@
 				kind = branch;
 			};
 		};
+		DAA9ABC82AB5E12700727E5C /* XCRemoteSwiftPackageReference "Localize-Swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/marmelroy/Localize-Swift.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -538,6 +577,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = DA743D242AB3B97100360653 /* XCRemoteSwiftPackageReference "Parchment" */;
 			productName = Parchment;
+		};
+		DAA9ABC92AB5E12700727E5C /* Localize_Swift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DAA9ABC82AB5E12700727E5C /* XCRemoteSwiftPackageReference "Localize-Swift" */;
+			productName = Localize_Swift;
 		};
 /* End XCSwiftPackageProductDependency section */
 

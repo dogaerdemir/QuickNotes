@@ -3,6 +3,7 @@ import CoreData
 import LocalAuthentication
 import UserNotifications
 import DropDown
+import Localize_Swift
 
 protocol NoteDelegate: AnyObject {
     func didAddNote()
@@ -71,7 +72,7 @@ class MainViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationItem.title = "Notes"
+        self.navigationItem.title = "tab_notes".localized()
         
         let newDarkModeStatus = UserDefaults.standard.bool(forKey: "isDarkMode")
         if currentDarkModeStatus != newDarkModeStatus {
