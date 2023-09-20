@@ -10,6 +10,7 @@
 		DA053ADA2AACBBDA00D24484 /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA053AD92AACBBDA00D24484 /* Note.swift */; };
 		DA053ADE2AACBC1500D24484 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA053ADD2AACBC1500D24484 /* MainViewModel.swift */; };
 		DA053AE12AACBDEC00D24484 /* UIViewController + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA053AE02AACBDEC00D24484 /* UIViewController + Extension.swift */; };
+		DA05B3612ABAED8A00E168EA /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = DA05B3602ABAED8A00E168EA /* Localizable.xcstrings */; };
 		DA12EC702AADDC7500C00E9B /* MainTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA12EC6E2AADDC7500C00E9B /* MainTableViewCell.swift */; };
 		DA12EC712AADDC7500C00E9B /* MainTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DA12EC6F2AADDC7500C00E9B /* MainTableViewCell.xib */; };
 		DA12EC742AADF92100C00E9B /* DropDown in Frameworks */ = {isa = PBXBuildFile; productRef = DA12EC732AADF92100C00E9B /* DropDown */; };
@@ -30,7 +31,6 @@
 		DA743D202AB3B90600360653 /* DetailsMapView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA743D1F2AB3B90600360653 /* DetailsMapView.storyboard */; };
 		DA743D232AB3B92600360653 /* DetailsMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA743D222AB3B92600360653 /* DetailsMapViewController.swift */; };
 		DA743D262AB3B97100360653 /* Parchment in Frameworks */ = {isa = PBXBuildFile; productRef = DA743D252AB3B97100360653 /* Parchment */; };
-		DAA9ABC42AB5E0FA00727E5C /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = DAA9ABC62AB5E0FA00727E5C /* Localizable.strings */; };
 		DAA9ABCA2AB5E12700727E5C /* Localize_Swift in Frameworks */ = {isa = PBXBuildFile; productRef = DAA9ABC92AB5E12700727E5C /* Localize_Swift */; };
 /* End PBXBuildFile section */
 
@@ -38,6 +38,7 @@
 		DA053AD92AACBBDA00D24484 /* Note.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
 		DA053ADD2AACBC1500D24484 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		DA053AE02AACBDEC00D24484 /* UIViewController + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController + Extension.swift"; sourceTree = "<group>"; };
+		DA05B3602ABAED8A00E168EA /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		DA12EC6E2AADDC7500C00E9B /* MainTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTableViewCell.swift; sourceTree = "<group>"; };
 		DA12EC6F2AADDC7500C00E9B /* MainTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainTableViewCell.xib; sourceTree = "<group>"; };
 		DA1EC83A2AACD8D700515772 /* DetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsViewModel.swift; sourceTree = "<group>"; };
@@ -59,8 +60,6 @@
 		DA743D1F2AB3B90600360653 /* DetailsMapView.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = DetailsMapView.storyboard; sourceTree = "<group>"; };
 		DA743D222AB3B92600360653 /* DetailsMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsMapViewController.swift; sourceTree = "<group>"; };
 		DAA9ABC12AB5E0E900727E5C /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
-		DAA9ABC52AB5E0FA00727E5C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
-		DAA9ABC72AB5E0FD00727E5C /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/Localizable.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -214,7 +213,7 @@
 		DAA9ABC02AB5E0C600727E5C /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				DAA9ABC62AB5E0FA00727E5C /* Localizable.strings */,
+				DA05B3602ABAED8A00E168EA /* Localizable.xcstrings */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -292,8 +291,8 @@
 				DA631BCB27EDB8510013867C /* Assets.xcassets in Resources */,
 				DA743D1D2AB3B89C00360653 /* DetailsParchmentView.storyboard in Resources */,
 				DA743D112AB3B4B400360653 /* MainView.storyboard in Resources */,
-				DAA9ABC42AB5E0FA00727E5C /* Localizable.strings in Resources */,
 				DA12EC712AADDC7500C00E9B /* MainTableViewCell.xib in Resources */,
+				DA05B3612ABAED8A00E168EA /* Localizable.xcstrings in Resources */,
 				DA743D132AB3B4BC00360653 /* DetailsNoteView.storyboard in Resources */,
 				DA743D152AB3B4C700360653 /* SettingsView.storyboard in Resources */,
 				DA743D202AB3B90600360653 /* DetailsMapView.storyboard in Resources */,
@@ -333,15 +332,6 @@
 				DAA9ABC12AB5E0E900727E5C /* tr */,
 			);
 			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-		DAA9ABC62AB5E0FA00727E5C /* Localizable.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				DAA9ABC52AB5E0FA00727E5C /* en */,
-				DAA9ABC72AB5E0FD00727E5C /* tr */,
-			);
-			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

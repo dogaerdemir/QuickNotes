@@ -20,6 +20,6 @@
 "tab_settings_section_language" = "Dil";
 "tab_settings_language_button" = "Seç";
 
-"alert_change_language" = "Dili Değiştir \nDeğişikliklerin etkili olması için yeniden başlatma gerekmektedir.";
+"alert_change_language" = "Dili Değiştir \nDeğişikliklerin etkili olması için yeniden başlatma gerekir.";
 "alert_cancel" = "Vazgeç";
 "alert_okay" = "Tamam";
