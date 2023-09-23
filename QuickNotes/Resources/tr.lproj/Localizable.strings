@@ -1,0 +1,25 @@
+/* 
+  Localizable.strings
+  QuickNotes
+
+  Created by Doğa Erdemir on 16.09.2023.
+  
+*/
+
+"en" = "İngilizce";
+"tr" = "Türkçe";
+
+"tab_notes" = "Notlar";
+
+"tab_settings" = "Ayarlar";
+"tab_settings_dark_mode" = "Karanlık Mod";
+"tab_settings_lock_app" = "Uygulamayı Kilitle";
+"tab_settings_language" = "Dil Seç";
+"tab_settings_section_appearance" = "Görünüm";
+"tab_settings_section_security" = "Güvenlik";
+"tab_settings_section_language" = "Dil";
+"tab_settings_language_button" = "Seç";
+
+"alert_change_language" = "Dili Değiştir \nDeğişikliklerin etkili olması için yeniden başlatma gerekir.";
+"alert_cancel" = "Vazgeç";
+"alert_okay" = "Tamam";

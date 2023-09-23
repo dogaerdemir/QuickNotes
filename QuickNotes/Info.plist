@@ -19,7 +19,5 @@
 			</array>
 		</dict>
 	</dict>
-	<key>NSFaceIDUsageDescription</key>
-	<string>For authentication</string>
 </dict>
 </plist>

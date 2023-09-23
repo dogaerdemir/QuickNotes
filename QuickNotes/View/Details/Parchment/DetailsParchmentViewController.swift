@@ -9,6 +9,7 @@ import UIKit
 
 import UIKit
 import Parchment
+import Localize_Swift
 
 class DetailsParchmentViewController: UIViewController {
     
@@ -25,7 +26,7 @@ class DetailsParchmentViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationItem.title = "Detay"
+        self.navigationItem.title = "new_note_navigation_detail".localized()
         
         let newDarkModeStatus = UserDefaults.standard.bool(forKey: "isDarkMode")
         if currentDarkModeStatus != newDarkModeStatus {
@@ -99,7 +100,7 @@ extension DetailsParchmentViewController: PagingViewControllerDataSource {
     }
     
     func pagingViewController(_: Parchment.PagingViewController, pagingItemAt index: Int) -> Parchment.PagingItem {
-        let titles = ["Note", "Location",]
+        let titles = ["note".localized(), "location".localized()]
         return PagingIndexItem(index: index, title: titles[index])
     }
 }

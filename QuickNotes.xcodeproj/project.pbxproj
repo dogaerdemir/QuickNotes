@@ -10,6 +10,7 @@
 		DA053ADA2AACBBDA00D24484 /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA053AD92AACBBDA00D24484 /* Note.swift */; };
 		DA053ADE2AACBC1500D24484 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA053ADD2AACBC1500D24484 /* MainViewModel.swift */; };
 		DA053AE12AACBDEC00D24484 /* UIViewController + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA053AE02AACBDEC00D24484 /* UIViewController + Extension.swift */; };
+		DA05B3612ABAED8A00E168EA /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = DA05B3602ABAED8A00E168EA /* Localizable.xcstrings */; };
 		DA12EC702AADDC7500C00E9B /* MainTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA12EC6E2AADDC7500C00E9B /* MainTableViewCell.swift */; };
 		DA12EC712AADDC7500C00E9B /* MainTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = DA12EC6F2AADDC7500C00E9B /* MainTableViewCell.xib */; };
 		DA12EC742AADF92100C00E9B /* DropDown in Frameworks */ = {isa = PBXBuildFile; productRef = DA12EC732AADF92100C00E9B /* DropDown */; };
@@ -30,12 +31,14 @@
 		DA743D202AB3B90600360653 /* DetailsMapView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA743D1F2AB3B90600360653 /* DetailsMapView.storyboard */; };
 		DA743D232AB3B92600360653 /* DetailsMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA743D222AB3B92600360653 /* DetailsMapViewController.swift */; };
 		DA743D262AB3B97100360653 /* Parchment in Frameworks */ = {isa = PBXBuildFile; productRef = DA743D252AB3B97100360653 /* Parchment */; };
+		DAA9ABCA2AB5E12700727E5C /* Localize_Swift in Frameworks */ = {isa = PBXBuildFile; productRef = DAA9ABC92AB5E12700727E5C /* Localize_Swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		DA053AD92AACBBDA00D24484 /* Note.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
 		DA053ADD2AACBC1500D24484 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		DA053AE02AACBDEC00D24484 /* UIViewController + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController + Extension.swift"; sourceTree = "<group>"; };
+		DA05B3602ABAED8A00E168EA /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		DA12EC6E2AADDC7500C00E9B /* MainTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTableViewCell.swift; sourceTree = "<group>"; };
 		DA12EC6F2AADDC7500C00E9B /* MainTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainTableViewCell.xib; sourceTree = "<group>"; };
 		DA1EC83A2AACD8D700515772 /* DetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsViewModel.swift; sourceTree = "<group>"; };
@@ -56,6 +59,7 @@
 		DA743D1C2AB3B89C00360653 /* DetailsParchmentView.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = DetailsParchmentView.storyboard; sourceTree = "<group>"; };
 		DA743D1F2AB3B90600360653 /* DetailsMapView.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = DetailsMapView.storyboard; sourceTree = "<group>"; };
 		DA743D222AB3B92600360653 /* DetailsMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsMapViewController.swift; sourceTree = "<group>"; };
+		DAA9ABC12AB5E0E900727E5C /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +67,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DAA9ABCA2AB5E12700727E5C /* Localize_Swift in Frameworks */,
 				DA12EC742AADF92100C00E9B /* DropDown in Frameworks */,
 				DA743D262AB3B97100360653 /* Parchment in Frameworks */,
 			);
@@ -134,6 +139,7 @@
 		DA631BBD27EDB84F0013867C /* QuickNotes */ = {
 			isa = PBXGroup;
 			children = (
+				DAA9ABC02AB5E0C600727E5C /* Resources */,
 				DA053ADF2AACBDC100D24484 /* Extensions */,
 				DA053ADB2AACBBDF00D24484 /* Model */,
 				DA053AE22AACBE8600D24484 /* View */,
@@ -204,6 +210,14 @@
 			path = Map;
 			sourceTree = "<group>";
 		};
+		DAA9ABC02AB5E0C600727E5C /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				DA05B3602ABAED8A00E168EA /* Localizable.xcstrings */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -223,6 +237,7 @@
 			packageProductDependencies = (
 				DA12EC732AADF92100C00E9B /* DropDown */,
 				DA743D252AB3B97100360653 /* Parchment */,
+				DAA9ABC92AB5E12700727E5C /* Localize_Swift */,
 			);
 			productName = QuickNotes;
 			productReference = DA631BBB27EDB84F0013867C /* QuickNotes.app */;
@@ -250,11 +265,13 @@
 			knownRegions = (
 				en,
 				Base,
+				tr,
 			);
 			mainGroup = DA631BB227EDB84F0013867C;
 			packageReferences = (
 				DA12EC722AADF92100C00E9B /* XCRemoteSwiftPackageReference "DropDown" */,
 				DA743D242AB3B97100360653 /* XCRemoteSwiftPackageReference "Parchment" */,
+				DAA9ABC82AB5E12700727E5C /* XCRemoteSwiftPackageReference "Localize-Swift" */,
 			);
 			productRefGroup = DA631BBC27EDB84F0013867C /* Products */;
 			projectDirPath = "";
@@ -275,6 +292,7 @@
 				DA743D1D2AB3B89C00360653 /* DetailsParchmentView.storyboard in Resources */,
 				DA743D112AB3B4B400360653 /* MainView.storyboard in Resources */,
 				DA12EC712AADDC7500C00E9B /* MainTableViewCell.xib in Resources */,
+				DA05B3612ABAED8A00E168EA /* Localizable.xcstrings in Resources */,
 				DA743D132AB3B4BC00360653 /* DetailsNoteView.storyboard in Resources */,
 				DA743D152AB3B4C700360653 /* SettingsView.storyboard in Resources */,
 				DA743D202AB3B90600360653 /* DetailsMapView.storyboard in Resources */,
@@ -311,6 +329,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				DA631BCD27EDB8510013867C /* Base */,
+				DAA9ABC12AB5E0E900727E5C /* tr */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -322,6 +341,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
@@ -382,6 +402,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
@@ -442,10 +463,11 @@
 				DEVELOPMENT_TEAM = UF8RP58SUS;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = QuickNotes/Info.plist;
+				INFOPLIST_KEY_NSFaceIDUsageDescription = "For authentication";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -469,10 +491,11 @@
 				DEVELOPMENT_TEAM = UF8RP58SUS;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = QuickNotes/Info.plist;
+				INFOPLIST_KEY_NSFaceIDUsageDescription = "For authentication";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -526,6 +549,14 @@
 				kind = branch;
 			};
 		};
+		DAA9ABC82AB5E12700727E5C /* XCRemoteSwiftPackageReference "Localize-Swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/marmelroy/Localize-Swift.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -538,6 +569,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = DA743D242AB3B97100360653 /* XCRemoteSwiftPackageReference "Parchment" */;
 			productName = Parchment;
+		};
+		DAA9ABC92AB5E12700727E5C /* Localize_Swift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DAA9ABC82AB5E12700727E5C /* XCRemoteSwiftPackageReference "Localize-Swift" */;
+			productName = Localize_Swift;
 		};
 /* End XCSwiftPackageProductDependency section */
 

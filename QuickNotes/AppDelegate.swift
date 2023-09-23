@@ -1,5 +1,6 @@
 import UIKit
 import CoreData
+import Localize_Swift
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -8,6 +9,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+        let isLanguageManuallyChanged = UserDefaults.standard.bool(forKey: "isLanguageManuallyChanged")
+        if !isLanguageManuallyChanged {
+            let deviceLanguage = Locale.current.languageCode ?? "en"
+            
+            if deviceLanguage == "en" || deviceLanguage == "tr" {
+                Localize.setCurrentLanguage(deviceLanguage)
+            } else {
+                Localize.setCurrentLanguage("en")
+            }
+            
+            UserDefaults.standard.set(true, forKey: "isLanguageManuallyChanged")
+        } else {
+            let userSelectedLanguage = UserDefaults.standard.string(forKey: "language") ?? "en"
+            Localize.setCurrentLanguage(userSelectedLanguage)
+        }
+
         return true
     }
 
