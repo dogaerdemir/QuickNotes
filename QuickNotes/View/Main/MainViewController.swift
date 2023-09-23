@@ -17,7 +17,7 @@ class MainViewController: UIViewController {
     let searchController = UISearchController(searchResultsController: nil)
     lazy var dropDown : DropDown = {
         let menu = DropDown()
-        let sortTypes = ["Sort By", "Alphabetical (A-Z)", "Alphabetical (Z-A)", "Create Date (Oldest First)", "Create Date (Newest First)", "Edit Date (Oldest First)", "Edit Date (Newest First)"]
+        let sortTypes = ["tab_notes_sortby".localized(), "tab_notes_sort_alph_az".localized(), "tab_notes_sort_alph_za".localized(), "tab_notes_sort_create_old".localized(), "tab_notes_sort_create_new".localized(), "tab_notes_sort_edit_old".localized(), "tab_notes_sort_edit_new".localized()]
         menu.dataSource = sortTypes
         
         menu.customCellConfiguration = { (index: Index, item: String, cell: DropDownCell) -> Void in
@@ -121,7 +121,7 @@ class MainViewController: UIViewController {
                 authenticate()
             } else {
                 self.getData()
-                sortNotes(by: currentSortMethod ?? "Alphabetical (A-Z)")
+                sortNotes(by: currentSortMethod ?? "tab_notes_sort_alph_az".localized())
             }
         } else {
             self.getData()
@@ -141,7 +141,7 @@ class MainViewController: UIViewController {
         
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
-        searchController.searchBar.placeholder = "Search in Notes"
+        searchController.searchBar.placeholder = "tab_notes_search_notes".localized()
         navigationItem.searchController = searchController
         
     }
@@ -154,19 +154,19 @@ class MainViewController: UIViewController {
         currentSortMethod = criteria
         
         switch criteria {
-            case "Alphabetical (A-Z)":
+            case "tab_notes_sort_alph_az".localized():
                 notes.sort { $0.title < $1.title }
-            case "Alphabetical (Z-A)":
+            case "tab_notes_sort_alph_za".localized():
                 notes.sort { $0.title < $1.title }
                 notes.reverse()
-            case "Create Date (Oldest First)":
+            case "tab_notes_sort_create_old".localized():
                 notes.sort { $0.createdDate < $1.createdDate }
-            case "Create Date (Newest First)":
+            case "tab_notes_sort_create_new".localized():
                 notes.sort { $0.createdDate < $1.createdDate }
                 notes.reverse()
-            case "Edit Date (Oldest First)":
+            case "tab_notes_sort_edit_old".localized():
                 notes.sort { $0.editedDate < $1.editedDate }
-            case "Edit Date (Newest First)":
+            case "tab_notes_sort_edit_new".localized():
                 notes.sort { $0.editedDate < $1.editedDate }
                 notes.reverse()
             default:
@@ -177,19 +177,19 @@ class MainViewController: UIViewController {
     
     func authenticate() {
         let localAuthenticationContext = LAContext()
-        localAuthenticationContext.localizedFallbackTitle = "Use pin code"
-        localAuthenticationContext.localizedCancelTitle = "Exit"
+        localAuthenticationContext.localizedFallbackTitle = "security_use_pin".localized()
+        localAuthenticationContext.localizedCancelTitle = "exit".localized()
         
         var authorizationError: NSError?
-        let reason = "Authentication is needed to access to app."
+        let reason = "security_auth_reason".localized()
         
         if localAuthenticationContext.canEvaluatePolicy(.deviceOwnerAuthentication, error: &authorizationError) {
             localAuthenticationContext.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: reason) { success, evaluateError in
                 if success {
                     DispatchQueue.main.async() {
-                        self.showToast(message: "Success", duration: .short)
+                        self.showToast(message: "success".localized(), duration: .short)
                         self.getData()
-                        self.sortNotes(by: self.currentSortMethod ?? "Alphabetical (A-Z)")
+                        self.sortNotes(by: self.currentSortMethod ?? "tab_notes_sort_alph_az".localized())
                     }
                 }
                 else { exit(-1) }
@@ -200,9 +200,9 @@ class MainViewController: UIViewController {
     
     func updateSelectAllButton() {
         if tableView.indexPathsForSelectedRows?.count == notes.count {
-            selectAllButton.title = "Deselect All"
+            selectAllButton.title = "tab_notes_deselect_all".localized()
         } else {
-            selectAllButton.title = "Select All"
+            selectAllButton.title = "tab_notes_select_all".localized()
         }
     }
     
@@ -228,7 +228,7 @@ class MainViewController: UIViewController {
         let deleteAllButton = UIBarButtonItem(image: UIImage(systemName: "trash.fill"), style: .plain, target: self, action: #selector(deleteSelectedRows))
         deleteAllButton.tintColor = .systemRed
         let cancelButton = UIBarButtonItem(image: UIImage(systemName: "trash.slash.fill"), style: .done, target: self, action: #selector(exitEditingMode))
-        selectAllButton = UIBarButtonItem(title: "Select All", style: .plain, target: self, action: #selector(selectOrDeselectAll))
+        selectAllButton = UIBarButtonItem(title: "tab_notes_select_all".localized(), style: .plain, target: self, action: #selector(selectOrDeselectAll))
         self.navigationItem.leftBarButtonItems = [deleteAllButton, cancelButton]
         self.navigationItem.rightBarButtonItem = selectAllButton
     }
@@ -267,12 +267,12 @@ class MainViewController: UIViewController {
             for indexPath in tableView.indexPathsForSelectedRows! {
                 tableView.deselectRow(at: indexPath, animated: true)
             }
-            selectAllButton.title = "Select All"
+            selectAllButton.title = "tab_notes_select_all".localized()
         } else {
             for row in 0..<notes.count {
                 tableView.selectRow(at: IndexPath(row: row, section: 0), animated: true, scrollPosition: .none)
             }
-            selectAllButton.title = "Deselect All"
+            selectAllButton.title = "tab_notes_deselect_all".localized()
         }
     }
     
@@ -347,17 +347,17 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            let alert = UIAlertController(title: "Deleting", message: "This cannot be undone", preferredStyle: .alert)
-            let deleteButton = UIAlertAction(title: "Delete", style: .destructive) { _ in
+            let alert = UIAlertController(title: "delete_alert_deleting".localized(), message: "delete_alert_warning".localized(), preferredStyle: .alert)
+            let deleteButton = UIAlertAction(title: "delete".localized(), style: .destructive) { _ in
                 let idToDelete = self.notes[indexPath.row].id
                 if self.viewModel.deleteNote(with: idToDelete) {
                     self.notes.remove(at: indexPath.row)
                     self.tableView.reloadData()
                 } else {
-                    print("Error during deleting")
+                    print("delete_error".localized())
                 }
             }
-            let dismissButton = UIAlertAction(title: "Cancel", style: .default, handler: nil)
+            let dismissButton = UIAlertAction(title: "alert_cancel".localized(), style: .default, handler: nil)
             alert.addAction(deleteButton)
             alert.addAction(dismissButton)
             self.present(alert, animated: true, completion: nil)
@@ -387,7 +387,7 @@ extension MainViewController: UISearchResultsUpdating {
 extension MainViewController: NoteDelegate {
     func didAddNote() {
         self.notes = viewModel.fetchNotes()
-        sortNotes(by: currentSortMethod ?? "Alphabetical (A-Z)")
+        sortNotes(by: currentSortMethod ?? "tab_notes_sort_alph_az".localized())
         self.tableView.reloadData()
     }
 }

@@ -1,5 +1,6 @@
 import UIKit
 import CoreData
+import Localize_Swift
 
 class DetailsNoteViewController: UIViewController {
     
@@ -28,7 +29,7 @@ class DetailsNoteViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationItem.title = chosenNote?.title ?? "New Note"
+        self.navigationItem.title = chosenNote?.title ?? "new_note".localized()
         
         let isDarkMode = UserDefaults.standard.bool(forKey: "isDarkMode")
         self.view.overrideUserInterfaceStyle = isDarkMode ? .dark : .light
@@ -38,6 +39,8 @@ class DetailsNoteViewController: UIViewController {
         contentField.layer.borderWidth = 0.3
         contentField.layer.borderColor = UIColor.gray.cgColor
         contentField.layer.cornerRadius = 8
+        
+        titleField.placeholder = "title".localized()
         
         let isDarkMode = UserDefaults.standard.bool(forKey: "isDarkMode")
         self.view.overrideUserInterfaceStyle = isDarkMode ? .dark : .light
@@ -59,7 +62,7 @@ class DetailsNoteViewController: UIViewController {
         } else {
             isNewMode = true
             showPlaceholder()
-            adaptiveButton.setTitle("Save", for: .normal)
+            adaptiveButton.setTitle("new_note_save".localized(), for: .normal)
             //titleField.becomeFirstResponder()
         }
         
@@ -76,7 +79,7 @@ class DetailsNoteViewController: UIViewController {
         let toolbar = UIToolbar()
         
         let space = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        let done = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(hideKeyboard))
+        let done = UIBarButtonItem(title: "keyboard_done".localized(), style: .done, target: self, action: #selector(hideKeyboard))
         
         toolbar.setItems([space, done], animated: true)
         toolbar.sizeToFit()
@@ -87,7 +90,7 @@ class DetailsNoteViewController: UIViewController {
     
     func showPlaceholder() {
         placeholderLabel = UILabel()
-        placeholderLabel.text = "Note"
+        placeholderLabel.text = "note".localized()
         placeholderLabel.font = .boldSystemFont(ofSize: 19)
         placeholderLabel.sizeToFit()
         contentField.addSubview(placeholderLabel)
