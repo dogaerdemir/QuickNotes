@@ -74,7 +74,7 @@ class SettingsViewController: UIViewController {
     }
     
     @objc func doChangeLanguage() {
-        let actionSheet = UIAlertController(title: nil, message: "alert_change_language".localized(), preferredStyle: UIAlertController.Style.actionSheet)
+        let actionSheet = UIAlertController(title: nil, message: "alert_languages".localized(), preferredStyle: UIAlertController.Style.actionSheet)
         let isDarkMode = UserDefaults.standard.bool(forKey: "isDarkMode")
         actionSheet.overrideUserInterfaceStyle = isDarkMode ? .dark : .light
         for language in availableLanguages {
@@ -83,6 +83,7 @@ class SettingsViewController: UIViewController {
                 (alert: UIAlertAction!) -> Void in
                 Localize.setCurrentLanguage(language)
                 UserDefaults.standard.set(Localize.currentLanguage(), forKey: "language")
+                AppManager.shared.startAppWithNewWindow(index: self.tabBarController?.selectedIndex ?? 0)
             })
             actionSheet.addAction(languageAction)
         }
@@ -99,7 +100,7 @@ class SettingsViewController: UIViewController {
 extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 3  // Toplam bölüm sayısı
+        return 3 
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
