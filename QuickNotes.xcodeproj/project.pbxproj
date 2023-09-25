@@ -32,6 +32,7 @@
 		DA743D232AB3B92600360653 /* DetailsMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA743D222AB3B92600360653 /* DetailsMapViewController.swift */; };
 		DA743D262AB3B97100360653 /* Parchment in Frameworks */ = {isa = PBXBuildFile; productRef = DA743D252AB3B97100360653 /* Parchment */; };
 		DAA9ABCA2AB5E12700727E5C /* Localize_Swift in Frameworks */ = {isa = PBXBuildFile; productRef = DAA9ABC92AB5E12700727E5C /* Localize_Swift */; };
+		DAFFEECA2AC22EE2007D2954 /* AppManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFFEEC92AC22EE2007D2954 /* AppManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -60,6 +61,7 @@
 		DA743D1F2AB3B90600360653 /* DetailsMapView.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = DetailsMapView.storyboard; sourceTree = "<group>"; };
 		DA743D222AB3B92600360653 /* DetailsMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsMapViewController.swift; sourceTree = "<group>"; };
 		DAA9ABC12AB5E0E900727E5C /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		DAFFEEC92AC22EE2007D2954 /* AppManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -139,6 +141,7 @@
 		DA631BBD27EDB84F0013867C /* QuickNotes */ = {
 			isa = PBXGroup;
 			children = (
+				DAFFEEC82AC22ED8007D2954 /* Manager */,
 				DAA9ABC02AB5E0C600727E5C /* Resources */,
 				DA053ADF2AACBDC100D24484 /* Extensions */,
 				DA053ADB2AACBBDF00D24484 /* Model */,
@@ -216,6 +219,14 @@
 				DA05B3602ABAED8A00E168EA /* Localizable.xcstrings */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		DAFFEEC82AC22ED8007D2954 /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				DAFFEEC92AC22EE2007D2954 /* AppManager.swift */,
+			);
+			path = Manager;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -313,6 +324,7 @@
 				DA053AE12AACBDEC00D24484 /* UIViewController + Extension.swift in Sources */,
 				DA743D232AB3B92600360653 /* DetailsMapViewController.swift in Sources */,
 				DA1EC83D2AAD329000515772 /* SettingsViewController.swift in Sources */,
+				DAFFEECA2AC22EE2007D2954 /* AppManager.swift in Sources */,
 				DA631BC927EDB84F0013867C /* QuickNotes.xcdatamodeld in Sources */,
 				DA631BBF27EDB84F0013867C /* AppDelegate.swift in Sources */,
 				DA053ADA2AACBBDA00D24484 /* Note.swift in Sources */,

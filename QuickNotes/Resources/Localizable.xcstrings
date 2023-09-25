@@ -18,19 +18,19 @@
         }
       }
     },
-    "alert_change_language" : {
+    "alert_languages" : {
       "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Restart is required for changes to take effect."
+            "value" : "Languages"
           }
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Değişikliklerin etkili olması için uygulamanın yeniden başlatılması gerekir."
+            "state" : "translated",
+            "value" : "Diller"
           }
         }
       }
