@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Localize_Swift
 
 class MainTableViewCell: UITableViewCell {
 
@@ -28,13 +29,20 @@ class MainTableViewCell: UITableViewCell {
         contentLabel.text = note.content
         
         let dateFormatter = DateFormatter()
-        dateFormatter.dateStyle = .medium
-        dateFormatter.timeStyle = .medium
+        if Localize.currentLanguage() == "tr" {
+            dateFormatter.locale = Locale(identifier: "tr_TR")
+            dateFormatter.dateFormat = "d MMMM yyyy - HH:mm"
+        } else {
+            dateFormatter.locale = Locale(identifier: "en_EN")
+            dateFormatter.dateFormat = "MMMM d, yyyy - HH:mm"
+        }
+        
+        
         let createdDateStr = dateFormatter.string(from: note.createdDate)
         let editedDateStr = dateFormatter.string(from: note.editedDate)
     
-        infoCreatedLabel.text = "CREATED - \(createdDateStr)"
-        infoEditedLabel.text = "LAST EDITED - \(editedDateStr)"
+        infoCreatedLabel.text = "\("cell_note_created".localized()): \(createdDateStr)"
+        infoEditedLabel.text = "\("cell_note_edited".localized()): \(editedDateStr)"
     }
     
 }
